@@ -20,7 +20,7 @@ public:
 	Environment(Point, Point, int, float, float, float, int);
 	virtual ~Environment();
 
-	Worm * getBestWorm();
+	WormBase * getBestWorm();
 
 	float evolutionCycle();
 
@@ -35,9 +35,9 @@ private:
 
 	Point start;
 	Point target;
-	Worm * bestWorm;
-	list<Worm*> population;
-	list<Worm*>::iterator currentWorm;
+	WormBase * bestWorm;
+	list<WormBase*> population;
+	list<WormBase*>::iterator currentWorm;
 
 
 	void createPopulation();
@@ -46,7 +46,7 @@ private:
 	void eliminate();
 	void resetWorms();
 
-	int compare(Worm*, Worm*);
+	int compare(WormBase*, WormBase*);
 
 };
 

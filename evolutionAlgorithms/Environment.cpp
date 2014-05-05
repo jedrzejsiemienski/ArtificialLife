@@ -25,7 +25,7 @@ Environment::Environment(Point start, Point target, int populationSize, float mu
 
 Environment::~Environment() {}
 
-Worm * Environment::getBestWorm() {
+WormBase * Environment::getBestWorm() {
 	return bestWorm;
 }
 
@@ -39,12 +39,12 @@ float Environment::evolutionCycle(){
 	mutate();
 	cross();
 	eliminate();
-	return bestWorm->getDistance();
+	return bestWorm->getDistanceToTarget();
 }
 
 void Environment::createPopulation(){
 	for(int i = 0; i < startPopulationSize; i++){
-		population.push_back(new Worm(&start, &target));
+		population.push_back(new WormBase(&start, &target));
 	}
 	bestWorm = *population.begin();
 }
@@ -56,9 +56,9 @@ void Environment::mutate(){
 }
 
 void Environment::cross(){
-	list<Worm*> newPopulation;
-	Worm* mather;
-	Worm* father;
+	list<WormBase*> newPopulation;
+	WormBase* mather;
+	WormBase* father;
 
 	while(!population.empty()){
 		currentWorm = population.begin();
@@ -84,10 +84,10 @@ void Environment::eliminate(){
 	unsigned int baseSize = population.size();
 	unsigned int targetSize = baseSize / 2;
 
-	list<Worm*>::iterator competitior1;
-	list<Worm*>::iterator competitior2;
+	list<WormBase*>::iterator competitior1;
+	list<WormBase*>::iterator competitior2;
 
-	Worm* winner;
+	WormBase* winner;
 	while(population.size() != targetSize){
 		competitior1 = population.begin();
 	    advance(competitior1, rand() % population.size());
@@ -95,7 +95,7 @@ void Environment::eliminate(){
 	    competitior2 = population.begin();
 	    advance(competitior2, rand() % population.size());
 
-	    Worm* loser;
+	    WormBase* loser;
 	    if(compare(*competitior1, *competitior2) == 1){
 	    	winner = *competitior1;
 	    	loser = *competitior2;
@@ -121,7 +121,7 @@ void Environment::eliminate(){
 
 }
 
-int Environment::compare(Worm* w1, Worm* w2) {
+int Environment::compare(WormBase* w1, WormBase* w2) {
 	float d1 = w1->getDistanceAfterNMoves(movementSteps, &target);
 	float d2 = w2->getDistanceAfterNMoves(movementSteps, &target);
 
