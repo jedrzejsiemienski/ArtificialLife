@@ -8,7 +8,7 @@
 #ifndef ENVIRONMENT_H_
 #define ENVIRONMENT_H_
 
-#include "../worms/Worm.h"
+#include "../worms/WormBase.h"
 #include "../utils/Point.h"
 #include <math.h>
 #include <list>

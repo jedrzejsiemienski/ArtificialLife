@@ -36,14 +36,11 @@ public:
 	Point * getEndPoint();
 	float getDistanceAfterNMoves(int, Point *, bool verbose = false);
 	float getCurrentDistance(Point *);
+	void move();
 
-	virtual void move();
 	virtual void reset();
 	virtual void mutate(float, float, float);
 	virtual void saveToFile(string);
-	virtual static Worm * loadFromFile(string);
-
-	Worm static * cross(Worm*, Worm*); //TOFIX KONIECZNIE BO TO NIE MOZE BYC STATYCZNE!!!!!
 
 protected:
 	Point * initPoint;
@@ -54,13 +51,14 @@ protected:
 	int jointsCount;
 	Joint** joints;
 
-	virtual int * stimulatePerceptron(int, int, int, int);
 	bool tossACoin();
 	int normalizeAlpha(float, bool);
 	int normalizeBeta(float);
 	void moveCenterJoint(int);
 	void moveLeftJoint();
 	void moveRightJoint();
+
+	virtual int * stimulatePerceptron(int, int, int, int);
 };
 
 

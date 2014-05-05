@@ -8,47 +8,21 @@
 #ifndef WORM_H_
 #define WORM_H_
 
-#include "Joint.h"
-#include "../utils/Point.h"
-#include "../neuralNetwork/Perceptron.h"
-#include "../evolutionAlgorithms/ChromosomesCrosser.h"
-#include "../evolutionAlgorithms/Chromosom.h"
-#include "SDL.h"
-#include <math.h>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
+#include "WormBase.h"
 
-class Worm {
+class Worm : public WormBase{
 public:
 	Worm(Point*, Point*);
-	virtual ~Worm();
+	~Worm();
 
-	void draw(SDL_Surface*);
-	void move();
 	void reset();
-
-	float getDistance();
-
-	//funkcje do mutacji itd
-	Point * getPosition();
-	Point * getInitPoint();
 	void mutate(float, float, float);
-	Worm static * cross(Worm*, Worm*);
+	void saveToFile(string);
+	static Worm * loadFromFile(string);
+	static Worm * cross(Worm*, Worm*);
 
 	int perceptronsCount;
 	Perceptron** perceptrons;
-
-	float getDistanceAfterNMoves(int, Point *, bool verbose = false);
-	float getCurrentDistance(Point *);
-
-	void saveToFile(string);
-	static Worm *  loadFromFile(string);
-
-	Point * getEndPoint();
 
 private:
 	Point * initPoint;
@@ -61,13 +35,6 @@ private:
 
 	void initPerceptrons();
 	int * stimulatePerceptron(int, int, int, int);
-	bool tossACoin();
-	int normalizeAlpha(float, bool);
-	int normalizeBeta(float);
-
-	void moveCenterJoint(int);
-	void moveLeftJoint();
-	void moveRightJoint();
 };
 
 #endif /* WORM_H_ */
