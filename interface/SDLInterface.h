@@ -12,7 +12,7 @@
 #include "SDL_thread.h"
 #include "SDL_gfxPrimitives.h"
 
-#include "../worms/Worm.h"
+#include "../worm/Worm.h"
 #include <iostream>
 
 //#include "SDL_image.h"

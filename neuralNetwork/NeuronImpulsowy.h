@@ -8,7 +8,7 @@
 #ifndef NEURONIMPULSOWY_H_
 #define NEURONIMPULSOWY_H_
 
-#include "../evolutionAlgorithms/Chromosom.h"
+#include "../evolution/Chromosom.h"
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>

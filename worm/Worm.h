@@ -11,8 +11,8 @@
 #include "Joint.h"
 #include "../utils/Point.h"
 #include "../neuralNetwork/Perceptron.h"
-#include "../evolutionAlgorithms/ChromosomesCrosser.h"
-#include "../evolutionAlgorithms/Chromosom.h"
+#include "../evolution/ChromosomesCrosser.h"
+#include "../evolution/Chromosom.h"
 #include "SDL.h"
 #include <math.h>
 #include <fstream>

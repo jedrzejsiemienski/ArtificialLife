@@ -9,11 +9,11 @@
 #include "neuralNetwork/NeuronImpulsowy.h"
 #include "neuralNetwork/KonwerterDanych.h"
 #include "neuralNetwork/Perceptron.h"
-#include "interfaces/SDLInterface.h"
-#include "evolutionAlgorithms/Chromosom.h"
-#include "evolutionAlgorithms/ChromosomesCrosser.h"
-#include "evolutionAlgorithms/Environment.h"
-#include "worms/Joint.h"
+#include "interface/SDLInterface.h"
+#include "evolution/Chromosom.h"
+#include "evolution/ChromosomesCrosser.h"
+#include "evolution/Environment.h"
+#include "worm/Joint.h"
 #include <iostream>
 #include <memory>
 
