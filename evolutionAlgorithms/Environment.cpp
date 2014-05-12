@@ -44,7 +44,7 @@ float Environment::evolutionCycle(){
 
 void Environment::createPopulation(){
 	for(int i = 0; i < startPopulationSize; i++){
-		population.push_back(new WormBase(&start, &target));
+		//population.push_back(new Worm(&start, &target));
 	}
 	bestWorm = *population.begin();
 }
