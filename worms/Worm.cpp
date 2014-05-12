@@ -74,7 +74,7 @@ void Worm::saveToFile(string name){
 	file.close();
 }
 
-Worm * Worm::loadFromFile(string name){
+void Worm::loadFromFile(string name){
 	ifstream file;
 	string line;
 
@@ -95,10 +95,9 @@ Worm * Worm::loadFromFile(string name){
 	double x2 = ::atof(point2[0].c_str());
 	double y2 = ::atof(point2[1].c_str());
 
-	//cout << x << " " << y << endl;
-	Worm * worm = new Worm(new Point(x1, y1), new Point(x2, y2));
-
-	//int chromosomesCount = worm->perceptrons[i]->getTotalAmountOfNeurons();
+	Worm * worm = this;
+	worm->initPoint = new Point(x1, y1);
+	worm->endPoint = new Point(x2, y2);
 
 	int perceptron = 0;
 	int neuron = 0;
@@ -145,11 +144,13 @@ Worm * Worm::loadFromFile(string name){
 		}
 	}
 	file.close();
-	return worm;
+	//return worm;
 }
 
-Worm * Worm::cross(Worm* w1, Worm* w2){
+WormBase * Worm::cross(WormBase* w2){
 	int chromosomesCount;
+
+	Worm * w1 = this;
 
 	Worm * worm = new Worm(w1->getInitPoint(), w1->getEndPoint());
 

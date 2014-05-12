@@ -71,8 +71,8 @@ void Environment::cross(){
 	    father = *currentWorm;
 	    population.erase(currentWorm);
 
-	    newPopulation.push_back(Worm::cross(mather, father));
-	    newPopulation.push_back(Worm::cross(mather, father));
+	    newPopulation.push_back(mather->cross(father));
+	    newPopulation.push_back(mather->cross(father));
 	    newPopulation.push_back(mather);
 	    newPopulation.push_back(father);
 	}

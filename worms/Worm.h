@@ -17,21 +17,11 @@ public:
 
 	void reset();
 	void mutate(float, float, float);
+	WormBase* cross(WormBase *);
+	void loadFromFile(string);
 	void saveToFile(string);
-	static Worm * loadFromFile(string);
-	static Worm * cross(Worm*, Worm*);
-
-	int perceptronsCount;
-	Perceptron** perceptrons;
 
 private:
-	Point * initPoint;
-	Point * endPoint;
-
-	float distance;
-	int lastLinkMoved;
-	int jointsCount;
-	Joint** joints;
 
 	void initPerceptrons();
 	int * stimulatePerceptron(int, int, int, int);

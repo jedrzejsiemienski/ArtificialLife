@@ -40,11 +40,16 @@ public:
 
 	virtual void reset();
 	virtual void mutate(float, float, float);
+	virtual WormBase* cross(WormBase *);
+	virtual void loadFromFile(string);
 	virtual void saveToFile(string);
 
-protected:
+	int perceptronsCount;
+	Perceptron** perceptrons;
 	Point * initPoint;
 	Point * endPoint;
+
+protected:
 
 	float distance;
 	int lastLinkMoved;
@@ -58,6 +63,7 @@ protected:
 	void moveLeftJoint();
 	void moveRightJoint();
 
+	void initPerceptrons();
 	virtual int * stimulatePerceptron(int, int, int, int);
 };
 

@@ -14,6 +14,8 @@
 #include "evolutionAlgorithms/ChromosomesCrosser.h"
 #include "evolutionAlgorithms/Environment.h"
 #include "worms/Joint.h"
+#include "worms/WormBase.h"
+#include "worms/Worm.h"
 #include <iostream>
 #include <memory>
 
@@ -21,21 +23,22 @@ using namespace std;
 
 //typedef boost::shared_ptr<gate> gate_ptr;
 
+/*
 void testDestruktory(){
 
-	list<Worm*> population;
-	list<Worm*>::iterator currentWorm;
+	list<WormBase*> population;
+	list<WormBase*>::iterator currentWorm;
 
 	int index1 = 0, index2 = 0;
 	for(int j = 1; j < 10000; j++){
 		index1++;
 		for(int i = 0; i < 1000; i++){
 			Point * a = new Point(10,10);
-			Worm * w1 = new Worm(a, a);
-			Worm * w2 = new Worm(a, a);
+			WormBase * w1 = new Worm(a, a);
+			WormBase * w2 = new Worm(a, a);
 			//Worm * w3 = new Worm(a);
 			delete a;
-			Worm * w3 = Worm::cross(w1, w2);
+			WormBase* w3 = w1->cross(w2);
 			population.push_back(w1);
 			population.push_back(w2);
 			population.push_back(w3);
@@ -45,7 +48,7 @@ void testDestruktory(){
 			index2++;
 			cout << index1 << " " << index2 << endl;
 
-			Worm * toErase;
+			WormBase * toErase;
 			currentWorm = population.begin();
 		    toErase = *currentWorm;
 		    toErase->mutate(0.5, 0.5, 0.5);
@@ -56,9 +59,8 @@ void testDestruktory(){
 		    population.erase(currentWorm);
 		}
 	}
-
+*/
 /*
-
 	int layersAmount = 3;
 	int * neuronsAmount = new int[layersAmount];
 
@@ -160,9 +162,9 @@ void testDestruktory(){
 		}
 	}
 	*/
-}
+//}
 
-
+/*
 void testKonwertera(){
 	int ilosc = 3;
 	KonwerterDanych ** konwertery = new KonwerterDanych*[ilosc];
@@ -273,6 +275,7 @@ void testJoint() {
 	inteface.manuallyWorm();
 }
 
+/*
 void testMutatingWorms(int interval){
 	Point start(500,300);
 
@@ -287,10 +290,9 @@ void testCrossingWorms(){
 	Point start(500,300);
 	Point target(700, 600);
 
-	Worm * worm1 = new Worm(&start, &target);
-	Worm * worm2 = new Worm(&start, &target);
-
-	Worm * worm3 = Worm::cross(worm1, worm2);
+	WormBase * worm1 = new Worm(&start, &target);
+	WormBase * worm2 = new Worm(&start, &target);
+	WormBase * worm3 = worm1->cross(worm2);
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm3, 200, new Point(0,0));
@@ -316,10 +318,11 @@ void testGettingDistance(){
 
 
 
-
-
 void testShowingFromFile(string name){
-	Worm * worm = Worm::loadFromFile(name);
+	Point p1(0,0);
+	Point p2(0,0);
+	Worm * worm = new Worm(&p1, &p2);
+	worm->loadFromFile(name);
 	Point target(worm->getEndPoint()->x, worm->getEndPoint()->y);
 
 	SDLInterface inteface;
@@ -384,7 +387,7 @@ void testEnvironment(char * cnfFile) {
 	}
 	file.close();
 
-	Worm * worm;
+	WormBase * worm;
 	worm = env.getBestWorm();
 
 	worm->saveToFile(ss2.str());
@@ -393,13 +396,16 @@ void testEnvironment(char * cnfFile) {
 
 
 void testSavingToFile(){
-	Worm * worm = new Worm(new Point(100,100), new Point(100,100));
+	WormBase * worm = new Worm(new Point(100,100), new Point(100,100));
 	worm->saveToFile("worm1.txt");
 
-	Worm * worm2 = Worm::loadFromFile("worm1.txt");
+	Point p1(0,0);
+	Point p2(0,0);
+	WormBase * worm2 = new Worm(&p1, &p2);
+	worm2->loadFromFile("worm1.txt");
 	worm2->saveToFile("worm2.txt");
 }
-
+*/
 
 int main(int argc, char *argv[]) {
 	srand (time(NULL));

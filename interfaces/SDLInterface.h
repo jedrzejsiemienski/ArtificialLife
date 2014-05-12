@@ -12,7 +12,7 @@
 #include "SDL_thread.h"
 #include "SDL_gfxPrimitives.h"
 
-#include "../worms/Worm.h"
+#include "../worms/WormBase.h"
 #include <iostream>
 
 //#include "SDL_image.h"
@@ -27,7 +27,7 @@ class SDLInterface {
 		virtual ~SDLInterface();
 
 		int manuallyWorm();
-		int displayWorm(Worm * worm, int, Point*, int interval = 100);
+		int displayWorm(WormBase * worm, int, Point*, int interval = 100);
 		void drawLine(int x1, int y1, int x2, int y2, int r, int g, int b);
 		void clrScr();
 
@@ -52,7 +52,7 @@ class SDLInterface {
 		Joint * j2;
 		Joint * j3;
 
-		Worm * worm;
+		WormBase * worm;
 };
 
 #endif /* SDLINTERFACE_H_ */

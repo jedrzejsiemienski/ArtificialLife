@@ -138,7 +138,7 @@ int SDLInterface::moveWorm(SDLKey keyPressed) {
 
 
 
-int SDLInterface::displayWorm(Worm * worm, int movementSteps, Point * target, int interval) {
+int SDLInterface::displayWorm(WormBase * worm, int movementSteps, Point * target, int interval) {
 	//worm = new Worm(WINDOW_WIDTH/2 - 50, WINDOW_HEIGHT/2 - 20);
 	//worm = new Worm(50, 50);
 	this->worm = worm;
