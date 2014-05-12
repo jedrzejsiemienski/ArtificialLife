@@ -27,7 +27,7 @@ class WormBase {
 public:
 	WormBase(Point*, Point*);
 	virtual ~WormBase();
-/*
+
 	void draw(SDL_Surface*);
 	float getDistanceToTarget(); //funkcja do oceny
 
@@ -38,11 +38,11 @@ public:
 	float getCurrentDistance(Point *);
 	void move();
 
-	virtual void reset();
-	virtual void mutate(float, float, float);
-	virtual WormBase* cross(WormBase *);
-	virtual void loadFromFile(string);
-	virtual void saveToFile(string);
+	virtual void reset() = 0;
+	virtual void mutate(float, float, float) = 0;
+	virtual WormBase* cross(WormBase *) = 0;
+	virtual void loadFromFile(string) = 0;
+	virtual void saveToFile(string) = 0;
 
 	int perceptronsCount;
 	Perceptron** perceptrons;
@@ -63,9 +63,8 @@ protected:
 	void moveLeftJoint();
 	void moveRightJoint();
 
-	void initPerceptrons();
-	virtual int * stimulatePerceptron(int, int, int, int);
-*/
+	virtual void initPerceptrons() = 0;
+	virtual int * stimulatePerceptron(int, int, int, int) = 0;
 };
 
 

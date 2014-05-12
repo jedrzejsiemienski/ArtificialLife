@@ -7,7 +7,6 @@
 using namespace std;
 
 WormBase::WormBase(Point * initPoint, Point * endPoint) {
-	/*
 	this->initPoint = new Point(initPoint->x, initPoint->y);
 	this->endPoint = new Point(endPoint->x, endPoint->y);
 
@@ -25,20 +24,16 @@ WormBase::WormBase(Point * initPoint, Point * endPoint) {
 			joints[i]->setLeft(joints[i-1]);
 		}
 	}
-	*/
 }
 
 WormBase::~WormBase() {
-	/*
 	for(int i = 0; i < jointsCount; i++){
 		delete joints[i];
 	}
 	delete[] joints;
 	delete initPoint;
-	*/
 }
 
-/*
 Point * WormBase::getEndPoint(){
 	return endPoint;
 }
@@ -58,6 +53,87 @@ void WormBase::draw(SDL_Surface* screen){
 	for(int i=0; i < jointsCount; i++){
 		joints[i]->draw(screen);
 	}
+}
+
+
+
+float WormBase::getDistanceToTarget(){
+	return distance;
+}
+
+float WormBase::getDistanceAfterNMoves(int movesCount, Point * target, bool verbose){
+	if(distance == -1.0){
+		for(int i = 0; i < movesCount; i++){
+			move();
+			if(verbose){
+				cout << getCurrentDistance(target) << endl;
+			}
+		}
+		distance = getCurrentDistance(target);
+		reset();
+	}
+	return distance;
+}
+
+float WormBase::getCurrentDistance(Point * target){
+	Point * p1 = getPosition();
+	float currenDtistance = sqrt(pow((p1->x - target->x),2) + pow((p1->y - target->y),2));
+	//cout << p1->x << " " << p1->y << " - " << target->x << " " << target->y << " : " << currenDtistance << endl;
+	delete p1;
+	return currenDtistance;
+}
+
+
+void WormBase::move(){
+	//cout << "move" << endl;
+
+	if(lastLinkMoved < jointsCount){
+		moveCenterJoint(lastLinkMoved);
+	}
+
+	if(lastLinkMoved == jointsCount){
+		moveLeftJoint();
+	}
+
+	if(lastLinkMoved == jointsCount + 1){
+		moveRightJoint();
+	}
+
+	lastLinkMoved++;
+	if(lastLinkMoved == jointsCount + 2){
+		lastLinkMoved = 0;
+	}
+
+	//cout << getPosition().x << " - " << getPosition().y << endl;
+}
+
+bool WormBase::tossACoin(){
+	if(rand() % 2 == 0){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int WormBase::normalizeAlpha(float a, bool positive){
+	float b;
+	if(a > 180){
+		b = a - 180;
+	} else {
+		b = a;
+	}
+
+	if(!positive){
+		b = b - 60;
+	}
+	b = b - 20;
+
+	//cout << "alfa " << b << endl;
+	return b;
+}
+
+int WormBase::normalizeBeta(float a){
+	return a + 90;
 }
 
 void WormBase::moveCenterJoint(int i){
@@ -99,7 +175,7 @@ void WormBase::moveCenterJoint(int i){
 	} else if(result[0] == 0 && result[1] == 1){
 		joints[i]->decreaseAlpha();
 	}
-	*//*
+	*/
 }
 
 void WormBase::moveLeftJoint(){
@@ -136,81 +212,3 @@ void WormBase::moveRightJoint(){
 	delete[] result;
 }
 
-float WormBase::getDistanceToTarget(){
-	return distance;
-}
-
-float WormBase::getDistanceAfterNMoves(int movesCount, Point * target, bool verbose){
-	if(distance == -1.0){
-		for(int i = 0; i < movesCount; i++){
-			move();
-			if(verbose){
-				cout << getCurrentDistance(target) << endl;
-			}
-		}
-		distance = getCurrentDistance(target);
-		reset();
-	}
-	return distance;
-}
-
-float WormBase::getCurrentDistance(Point * target){
-	Point * p1 = getPosition();
-	float currenDtistance = sqrt(pow((p1->x - target->x),2) + pow((p1->y - target->y),2));
-	//cout << p1->x << " " << p1->y << " - " << target->x << " " << target->y << " : " << currenDtistance << endl;
-	delete p1;
-	return currenDtistance;
-}
-
-void WormBase::move(){
-	//cout << "move" << endl;
-
-	if(lastLinkMoved < jointsCount){
-		moveCenterJoint(lastLinkMoved);
-	}
-
-	if(lastLinkMoved == jointsCount){
-		moveLeftJoint();
-	}
-
-	if(lastLinkMoved == jointsCount + 1){
-		moveRightJoint();
-	}
-
-	lastLinkMoved++;
-	if(lastLinkMoved == jointsCount + 2){
-		lastLinkMoved = 0;
-	}
-
-	//cout << getPosition().x << " - " << getPosition().y << endl;
-}
-
-int WormBase::normalizeAlpha(float a, bool positive){
-	float b;
-	if(a > 180){
-		b = a - 180;
-	} else {
-		b = a;
-	}
-
-	if(!positive){
-		b = b - 60;
-	}
-	b = b - 20;
-
-	//cout << "alfa " << b << endl;
-	return b;
-}
-
-int WormBase::normalizeBeta(float a){
-	return a + 90;
-}
-
-bool WormBase::tossACoin(){
-	if(rand() % 2 == 0){
-		return true;
-	} else {
-		return false;
-	}
-}
-*/
