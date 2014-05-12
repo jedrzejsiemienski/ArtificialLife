@@ -10,6 +10,7 @@
 using namespace std;
 
 Worm::Worm(Point * initPoint, Point * endPoint) : WormBase(initPoint, endPoint) {
+	perceptronsCount = 3;
 	perceptrons = new Perceptron*[perceptronsCount];
 	initPerceptrons();
 }

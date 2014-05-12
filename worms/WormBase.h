@@ -63,7 +63,6 @@ protected:
 	void moveLeftJoint();
 	void moveRightJoint();
 
-	void initPerceptrons();
 	virtual int * stimulatePerceptron(int, int, int, int) = 0;
 };
 

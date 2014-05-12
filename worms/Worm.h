@@ -22,7 +22,6 @@ public:
 	void saveToFile(string);
 
 private:
-
 	void initPerceptrons();
 	int * stimulatePerceptron(int, int, int, int);
 };

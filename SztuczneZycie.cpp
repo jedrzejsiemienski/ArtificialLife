@@ -23,7 +23,7 @@ using namespace std;
 
 //typedef boost::shared_ptr<gate> gate_ptr;
 
-/*
+
 void testDestruktory(){
 
 	list<WormBase*> population;
@@ -59,7 +59,8 @@ void testDestruktory(){
 		    population.erase(currentWorm);
 		}
 	}
-*/
+}
+
 /*
 	int layersAmount = 3;
 	int * neuronsAmount = new int[layersAmount];
@@ -298,6 +299,7 @@ void testCrossingWorms(){
 	inteface.displayWorm(worm3, 200, new Point(0,0));
 
 }
+*/
 
 void testGettingDistance(){
 	//Point start(100, 500);
@@ -307,16 +309,19 @@ void testGettingDistance(){
 	Point target(700, 600);
 
 	Worm * worm1 = new Worm(&start, &target);
+	worm1->move();
+	int steps = 2;
 
-	int steps = 300;
-	cout << worm1->getDistanceAfterNMoves(steps, &target, true);
+	/*
+ 	cout << worm1->getDistanceAfterNMoves(steps, &target, true);
+ 	*/
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm1, steps, &target, 10);
 
 }
 
-
+/*
 
 void testShowingFromFile(string name){
 	Point p1(0,0);
@@ -414,12 +419,12 @@ int main(int argc, char *argv[]) {
 	//testPerceptron();
 	//testChromosome();
 
-	testJoint();
+	//testJoint();
 	//testMutatingWorms(40);
 
 	//testCrossingWorms();
 
-	//testDestruktory();
+	testDestruktory();
 	//testGettingDistance();
 	//testSavingToFile();
 
