@@ -8,14 +8,11 @@
 #ifndef BASEBRAIN_H_
 #define BASEBRAIN_H_
 
-namespace std {
-
 class BaseBrain {
 public:
 	BaseBrain();
 	virtual ~BaseBrain();
+	virtual int * stimulate(int b1, int b2, int a1, int a2, int a3) = 0;
 };
-
-} /* namespace std */
 
 #endif /* BASEBRAIN_H_ */

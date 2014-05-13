@@ -9,11 +9,9 @@
 
 using namespace std;
 
-Skeleton::Skeleton(float startX, float startY, float targetX, float targetY) {
+Skeleton::Skeleton(float startX, float startY) {
 	initPoint = new Point(startX, startY);
-	endPoint = new Point(targetX, targetY);
 
-	distance = -1;
 	jointsCount = 3;
 	joints = new Joint*[jointsCount];
 
@@ -34,11 +32,16 @@ Skeleton::~Skeleton() {
 	}
 	delete[] joints;
 	delete initPoint;
-	delete endPoint;
 }
 
-Point * Skeleton::getEndPoint(){
-	return endPoint;
+void Skeleton::draw(SDL_Surface* screen){
+	for(int i=0; i < jointsCount; i++){
+		joints[i]->draw(screen);
+	}
+}
+
+void Skeleton::reset(){
+	joints[0]->reset(false);
 }
 
 Point * Skeleton::getInitPoint(){
@@ -50,16 +53,6 @@ Point * Skeleton::getPosition(){
 	c->x = joints[0]->a.x;
 	c->y = joints[0]->a.y;
 	return c;
-}
-
-void Skeleton::reset(){
-	joints[0]->reset(false);
-}
-
-void Skeleton::draw(SDL_Surface* screen){
-	for(int i=0; i < jointsCount; i++){
-		joints[i]->draw(screen);
-	}
 }
 
 void Skeleton::moveFirstJoint(bool increase){
@@ -95,13 +88,6 @@ void Skeleton::moveRightJoint(bool increase){
 	} else {
 		joints[jointsCount-1]->decreaseBetaRight();
 	}
-}
-
-float Skeleton::getCurrentDistanceToTarget(Point * target){
-	Point * p1 = getPosition();
-	float currenDtistance = sqrt(pow((p1->x - target->x),2) + pow((p1->y - target->y),2));
-	delete p1;
-	return currenDtistance;
 }
 
 int Skeleton::normalizeAlpha(float a, bool positive){

@@ -21,11 +21,14 @@
 
 class Skeleton {
 public:
-	Skeleton(float, float, float, float);
+	Skeleton(float, float);
 	virtual ~Skeleton();
 
 	void draw(SDL_Surface*);
 	void reset();
+
+	Point * getInitPoint();
+	Point * getPosition();
 
 	void moveLeftJoint(bool);   //beta, first joint
 	void moveRightJoint(bool);  //beta, third joint
@@ -33,17 +36,10 @@ public:
 	void moveSecondJoint(bool); //alpha, second joint
 	void moveThirdJoint(bool);  //alpha, third joint
 
-	Point * getPosition();
-	Point * getInitPoint();
-	Point * getEndPoint();
-
-	float getCurrentDistanceToTarget(Point *);
 
 private:
 	Point * initPoint;
-	Point * endPoint;
 
-	float distance;
 	int jointsCount;
 	Joint** joints;
 

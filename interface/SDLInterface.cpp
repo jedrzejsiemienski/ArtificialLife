@@ -17,7 +17,7 @@ SDLInterface::~SDLInterface() {}
 
 int SDLInterface::manuallySkeleton() {
 
-	skeleton = new Skeleton(400, 400, 0, 0);
+	skeleton = new Skeleton(400, 400);
 
 	SDL_Init( SDL_INIT_VIDEO );
 
