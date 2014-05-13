@@ -12,6 +12,7 @@
 #include "SDL_thread.h"
 #include "SDL_gfxPrimitives.h"
 
+#include "../worm/Skeleton.h"
 #include "../worm/Worm.h"
 #include <iostream>
 
@@ -26,7 +27,8 @@ class SDLInterface {
 		SDLInterface();
 		virtual ~SDLInterface();
 
-		int manuallyWorm();
+		int manuallySkeleton();
+		int manuallyJoints();
 		int displayWorm(Worm * worm, int, Point*, int interval = 100);
 		void drawLine(int x1, int y1, int x2, int y2, int r, int g, int b);
 		void clrScr();
@@ -44,7 +46,9 @@ class SDLInterface {
 		void timerAction();
 		void drawScene();
 		int handleKeyPress(SDLKey);
-		int moveWorm(SDLKey);
+
+		int moveJoint(SDLKey);
+		int moveSkeleton(SDLKey);
 
 		Point * target;
 
@@ -52,6 +56,7 @@ class SDLInterface {
 		Joint * j2;
 		Joint * j3;
 
+		Skeleton * skeleton;
 		Worm * worm;
 };
 
