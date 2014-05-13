@@ -9,6 +9,7 @@
 #define WORM_H_
 
 #include "../brains/BaseBrain.h"
+#include "../brains/BrainDummy.h"
 #include "../utils/Point.h"
 #include "Skeleton.h"
 #include "SDL.h"

@@ -10,9 +10,7 @@
 
 class BaseBrain {
 public:
-	BaseBrain();
-	virtual ~BaseBrain();
-	virtual int * stimulate(int b1, int b2, int a1, int a2, int a3) = 0;
+	virtual int ** stimulate(int b1, int b2, int a1, int a2, int a3) = 0;
 };
 
 #endif /* BASEBRAIN_H_ */

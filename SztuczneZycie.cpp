@@ -7,6 +7,7 @@
 
 
 #include "interface/SDLInterface.h"
+#include "worm/Worm.h"
 
 using namespace std;
 
@@ -21,10 +22,19 @@ void testSkeleton() {
 	inteface.manuallySkeleton();
 }
 
+void testWorm() {
+	Point target(0, 0);
+	Worm * worm = new Worm(2, 400, 400, target.x, target.y);
+
+	SDLInterface inteface;
+	inteface.displayWorm(worm, 5, &target, 100);
+}
+
 
 int main(int argc, char *argv[]) {
 	//testJoints();
-	testSkeleton();
+	//testSkeleton();
+	testWorm();
 
 	return 0;
 }

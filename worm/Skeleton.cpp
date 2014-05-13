@@ -90,6 +90,36 @@ void Skeleton::moveRightJoint(bool increase){
 	}
 }
 
+float Skeleton::getBeta1(){
+	return getBeta(0);
+}
+
+float Skeleton::getBeta2(){
+	return getBeta(jointsCount-1);
+}
+
+float Skeleton::getAlpha1(){
+	return getAlpha(0);
+}
+
+float Skeleton::getAlpha2(){
+	return getAlpha(1);
+}
+
+float Skeleton::getAlpha3(){
+	return getAlpha(2);
+}
+
+
+float Skeleton::getBeta(int i){
+	return joints[i]->beta;
+}
+
+float Skeleton::getAlpha(int i){
+	return joints[i]->alpha;
+}
+
+
 int Skeleton::normalizeAlpha(float a, bool positive){
 	float b;
 	if(a > 180){

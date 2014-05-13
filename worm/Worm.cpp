@@ -13,12 +13,11 @@ Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
 	switch(type){
 		case 0:
 			//this.brain = new BrainOneP();
-			break;
 		case 1:
 			//this.brain = new BrainManyP();
 		case 2:
 		default:
-			//this.brain = new BrainDummy();
+			brain = new BrainDummy();
 			break;
 	}
 }
@@ -26,11 +25,65 @@ Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
 Worm::~Worm() {
 	delete skeleton;
 	delete brain;
+	delete endPoint;
 }
 
 
 void Worm::move(){
+	int ** result = brain->stimulate(
+		skeleton->getBeta1(),
+		skeleton->getBeta2(),
+		skeleton->getAlpha1(),
+		skeleton->getAlpha2(),
+		skeleton->getAlpha3()
+	);
 
+	int i = 0;
+	if(result[i][0] == 1){
+		if(result[i][1] == 1){
+			skeleton->moveLeftJoint(true);
+		} else {
+			skeleton->moveLeftJoint(false);
+		}
+	}
+
+	i++;
+	if(result[i][1] == 1){
+		if(result[i][1] == 1){
+			skeleton->moveFirstJoint(true);
+		} else {
+			skeleton->moveFirstJoint(false);
+		}
+	}
+
+	i++;
+	if(result[i][1] == 1){
+		if(result[i][1] == 1){
+			skeleton->moveSecondJoint(true);
+		} else {
+			skeleton->moveSecondJoint(false);
+		}
+	}
+
+	i++;
+	if(result[i][1] == 1){
+		if(result[i][1] == 1){
+			skeleton->moveThirdJoint(true);
+		} else {
+			skeleton->moveThirdJoint(false);
+		}
+	}
+
+	i++;
+	if(result[i][1] == 1){
+		if(result[i][1] == 1){
+			skeleton->moveRightJoint(true);
+		} else {
+			skeleton->moveRightJoint(false);
+		}
+	}
+
+	delete result;
 }
 
 void Worm::draw(SDL_Surface* screen){

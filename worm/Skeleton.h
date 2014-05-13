@@ -36,7 +36,11 @@ public:
 	void moveSecondJoint(bool); //alpha, second joint
 	void moveThirdJoint(bool);  //alpha, third joint
 
-
+	float getBeta1();
+	float getBeta2();
+	float getAlpha1();
+	float getAlpha2();
+	float getAlpha3();
 private:
 	Point * initPoint;
 
@@ -46,6 +50,9 @@ private:
 	void moveCenterJoint(bool, int);
 	int normalizeAlpha(float, bool);
 	int normalizeBeta(float);
+
+	float getBeta(int);
+	float getAlpha(int);
 };
 
 #endif /* SKELETON_H_ */
