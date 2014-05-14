@@ -12,6 +12,7 @@
 #include "../brains/BrainDummy.h"
 #include "../brains/BrainRandom.h"
 #include "../brains/BrainManyPerceptrons.h"
+#include "../brains/BrainOnePerceptron.h"
 #include "../utils/Point.h"
 #include "Skeleton.h"
 #include "SDL.h"

@@ -12,7 +12,8 @@ Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
 	skeleton = new Skeleton(startX, startY);
 	switch(type){
 		case 0:
-			//this.brain = new BrainOneP();
+			brain = new BrainOnePerceptron();
+			break;
 		case 1:
 			brain = new BrainManyPerceptrons();
 			break;

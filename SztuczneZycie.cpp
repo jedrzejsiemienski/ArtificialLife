@@ -24,7 +24,7 @@ void testSkeleton() {
 
 void testWorm() {
 	Point target(0, 0);
-	Worm * worm = new Worm(1, 400, 400, target.x, target.y);
+	Worm * worm = new Worm(0, 400, 400, target.x, target.y);
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm, 300, &target, 100);
