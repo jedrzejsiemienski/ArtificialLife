@@ -29,6 +29,7 @@ public:
 	void draw(SDL_Surface*);
 	void reset();
 
+	void setInitPoint(int, int);
 	Point * getInitPoint();
 	Point * getPosition();
 

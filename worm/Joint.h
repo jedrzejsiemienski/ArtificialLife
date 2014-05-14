@@ -39,6 +39,7 @@ public:
 	void print();
 
 	void reset(bool);
+	void setStartPoint(int, int);
 
 	Point a;
 	Point b;

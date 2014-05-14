@@ -44,6 +44,13 @@ void Skeleton::reset(){
 	joints[0]->reset(false);
 }
 
+void Skeleton::setInitPoint(int x, int y){
+	initPoint->x = x;
+	initPoint->y = y;
+	joints[0]->setStartPoint(x, y);
+}
+
+
 Point * Skeleton::getInitPoint(){
 	return initPoint;
 }
@@ -138,3 +145,4 @@ int Skeleton::normalizeAlpha(float a, bool positive){
 int Skeleton::normalizeBeta(float a){
 	return a + 90;
 }
+

@@ -289,6 +289,10 @@ void Joint::decreaseBetaRight(){
 	}
 }
 
+void Joint::setStartPoint(int x, int y){
+	startX = x;
+	startY = y;
+}
 
 void Joint::draw(SDL_Surface* screen){
     lineRGBA(screen, a.x, a.y, b.x, b.y, 255, 0, 0, 255);

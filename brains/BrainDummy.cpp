@@ -7,13 +7,9 @@
 
 #include "BrainDummy.h"
 
-BrainDummy::BrainDummy() {
-	dataCount = 5;
-}
+BrainDummy::BrainDummy() : BaseBrain() {}
 
-BrainDummy::~BrainDummy() {
-
-}
+BrainDummy::~BrainDummy() {}
 
 int ** BrainDummy::stimulate(int b1, int b2, int a1, int a2, int a3){
 	int ** result = new int*[dataCount];

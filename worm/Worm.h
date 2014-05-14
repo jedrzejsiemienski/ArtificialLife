@@ -22,6 +22,7 @@ using namespace std;
 class Worm {
 public:
 	Worm(int, int, int, int, int);
+	Worm(int, string); //load from file
 	virtual ~Worm();
 	void move();
 	void draw(SDL_Surface*);
@@ -32,7 +33,16 @@ public:
 
 	float getCurrentDistanceToTarget();
 
+	void setBrain(BaseBrain*);
+	BaseBrain* getBrain();
+
+	void saveToFile(string);
+
 private:
+	void loadFromFile(string);
+	void setBrainByType(int);
+
+	Point * initPoint;
 	Point * endPoint;
 	BaseBrain* brain;
 	Skeleton* skeleton;

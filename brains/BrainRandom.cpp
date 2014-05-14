@@ -7,13 +7,9 @@
 
 #include "BrainRandom.h"
 
-BrainRandom::BrainRandom() {
-	dataCount = 5;
-}
+BrainRandom::BrainRandom() : BaseBrain(){}
 
-BrainRandom::~BrainRandom() {
-	// TODO Auto-generated destructor stub
-}
+BrainRandom::~BrainRandom() {}
 
 int ** BrainRandom::stimulate(int b1, int b2, int a1, int a2, int a3){
 	srand (time(NULL));

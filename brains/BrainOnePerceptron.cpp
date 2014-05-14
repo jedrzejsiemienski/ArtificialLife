@@ -8,9 +8,8 @@
 #include "BrainOnePerceptron.h"
 
 
-BrainOnePerceptron::BrainOnePerceptron() {
+BrainOnePerceptron::BrainOnePerceptron() : BaseBrain() {
 	srand (time(NULL));
-	dataCount = 5;
 	initPerceptron();
 }
 
@@ -62,3 +61,91 @@ void BrainOnePerceptron::initPerceptron(){
 	delete[] givenRanges;
 	delete[] givenBuckets;
 }
+
+void BrainOnePerceptron::saveToFile(string name){
+	ofstream file;
+
+	file.open(name.c_str());
+
+	file << "1" << endl ;
+	file << getInitPoint()->x << " " << getInitPoint()->y << endl;
+	file << getEndPoint()->x << " " << getEndPoint()->y << endl;
+
+	int chromosomesCount;
+	Chromosom ** ch1 = perceptron->getChromosomes();
+	chromosomesCount = perceptron->getTotalAmountOfNeurons();
+
+	for(int j=0; j < chromosomesCount; j++){
+		file << ch1[j]->toString() << endl ;
+	}
+	file << "L" << endl;
+
+	for(int j=0; j < chromosomesCount; j++){
+		delete ch1[j];
+	}
+	delete[] ch1;
+
+	file.close();
+}
+
+void BrainOnePerceptron::loadFromFile(string name){
+	ifstream file;
+	string line;
+
+	file.open(name.c_str());
+
+	//sprawdzamy typ:
+	getline(file, line);
+	if(line[0] != '1')
+		return;
+
+	//to to jest punkt startowy
+	getline(file, line);
+	istringstream iss(line);
+	vector<string> point;
+	copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string> >(point));
+	double x1 = ::atof(point[0].c_str());
+	double y1 = ::atof(point[1].c_str());
+	initPoint->x = x1;
+	initPoint->y = y1;
+
+	getline(file, line);
+	istringstream iss2(line);
+	vector<string> point2;
+	copy(istream_iterator<string>(iss2), istream_iterator<string>(), back_inserter<vector<string> >(point2));
+	double x2 = ::atof(point2[0].c_str());
+	double y2 = ::atof(point2[1].c_str());
+	endPoint->x = x2;
+	endPoint->y = y2;
+
+	int neuron = 0;
+	int index = 0;
+	int chromosomesCount = perceptron->getTotalAmountOfNeurons();
+	Chromosom ** ch = perceptron->getChromosomes();
+	while(getline(file, line)){
+		if(line[0] == 'L'){
+			perceptron->setChromosomes(ch);
+			for(int i = 0; i < chromosomesCount; i++){
+				delete ch[i];
+			}
+			delete[] ch;
+			break;
+		} else if(line.length() == 0){
+			neuron++;
+			index = 0;
+		} else {
+			istringstream iss(line);
+			vector<string> tokens;
+			copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string> >(tokens));
+			if(index < ch[neuron]->pairsCount){
+				ch[neuron]->pairs[index].t = ::atof(tokens[0].c_str());
+				ch[neuron]->pairs[index].w = ::atof(tokens[1].c_str());
+			} else {
+				ch[neuron]->floats[index - ch[neuron]->pairsCount] = ::atof(tokens[0].c_str());
+			}
+			index++;
+		}
+	}
+	file.close();
+}
+

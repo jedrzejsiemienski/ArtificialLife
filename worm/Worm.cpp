@@ -8,22 +8,36 @@
 #include "Worm.h"
 
 Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
+	initPoint = new Point(startX, startY);
 	endPoint = new Point(targetX, targetY);
 	skeleton = new Skeleton(startX, startY);
+	setBrainByType(type);
+}
+
+Worm::Worm(int type, string name) {
+	initPoint = new Point(0, 0);
+	endPoint = new Point(0, 0);
+	setBrainByType(type);
+	loadFromFile(name);
+}
+
+void Worm::setBrainByType(int type){
 	switch(type){
-		case 0:
-			brain = new BrainOnePerceptron();
-			break;
 		case 1:
-			brain = new BrainManyPerceptrons();
+			setBrain(new BrainOnePerceptron());
 			break;
 		case 2:
-			brain = new BrainDummy();
+			setBrain(new BrainManyPerceptrons());
 			break;
 		case 3:
-			brain = new BrainRandom();
+			setBrain(new BrainDummy());
 			break;
+		case 4:
+			setBrain(new BrainRandom());
+			break;
+		case 0:
 		default:
+			brain = 0; // add brain manually
 			break;
 	}
 }
@@ -34,6 +48,15 @@ Worm::~Worm() {
 	delete endPoint;
 }
 
+void Worm::setBrain(BaseBrain* givenBrain){
+	brain = givenBrain;
+	brain->setInitPoint(initPoint->x, initPoint->y);
+	brain->setEndPoint(endPoint->x, endPoint->y);
+}
+
+BaseBrain* Worm::getBrain(){
+	return brain;
+}
 
 void Worm::move(){
 	int ** result = brain->stimulate(
@@ -49,18 +72,15 @@ void Worm::move(){
 		if(result[i][1] == 1){
 			skeleton->moveLeftJoint(true);
 		} else {
-			cout << "skeleton->moveFirstJoint(false);" << endl;
 			skeleton->moveLeftJoint(false);
 		}
 	}
 
 	i++;
 	if(result[i][0] == 1){
-		cout << "?" << endl;
 		if(result[i][1] == 1){
 			skeleton->moveFirstJoint(true);
 		} else {
-			cout << "skeleton->moveFirstJoint(false);" << endl;
 			skeleton->moveFirstJoint(false);
 		}
 	}
@@ -70,7 +90,6 @@ void Worm::move(){
 		if(result[i][1] == 1){
 			skeleton->moveSecondJoint(true);
 		} else {
-			cout << "skeleton->moveSecondJoint(false);" << endl;
 			skeleton->moveSecondJoint(false);
 		}
 	}
@@ -80,7 +99,6 @@ void Worm::move(){
 		if(result[i][1] == 1){
 			skeleton->moveThirdJoint(true);
 		} else {
-			cout << "skeleton->moveThirdJoint(false);" << endl;
 			skeleton->moveThirdJoint(false);
 		}
 	}
@@ -90,7 +108,6 @@ void Worm::move(){
 		if(result[i][1] == 1){
 			skeleton->moveRightJoint(true);
 		} else {
-			cout << "skeleton->moveRightJoint(false);" << endl;
 			skeleton->moveRightJoint(false);
 		}
 	}
@@ -107,7 +124,7 @@ Point * Worm::getPosition(){
 }
 
 Point * Worm::getInitPoint(){
-	return skeleton->getInitPoint();
+	return initPoint;
 }
 
 Point * Worm::getEndPoint(){
@@ -120,3 +137,18 @@ float Worm::getCurrentDistanceToTarget(){
 	delete p1;
 	return currenDtistance;
 }
+
+void Worm::saveToFile(string name){
+	brain->saveToFile(name);
+}
+
+void Worm::loadFromFile(string name){
+	brain->loadFromFile(name);
+	initPoint->x = brain->getInitPoint()->x;
+	initPoint->y = brain->getInitPoint()->y;
+	endPoint->x = brain->getEndPoint()->x;
+	endPoint->y = brain->getEndPoint()->y;
+	skeleton = new Skeleton(initPoint->x, initPoint->y);
+}
+
+

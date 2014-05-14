@@ -7,9 +7,8 @@
 
 #include "BrainManyPerceptrons.h"
 
-BrainManyPerceptrons::BrainManyPerceptrons() {
+BrainManyPerceptrons::BrainManyPerceptrons() : BaseBrain() {
 	srand (time(NULL));
-	dataCount = 5;
 	perceptronsCount = 5;
 	perceptrons = new Perceptron*[perceptronsCount];
 	initPerceptrons();
@@ -68,4 +67,12 @@ void BrainManyPerceptrons::initPerceptrons(){
 	delete[] neuronsAmount;
 	delete[] givenRanges;
 	delete[] givenBuckets;
+}
+
+void BrainManyPerceptrons::saveToFile(string name){
+
+}
+
+void BrainManyPerceptrons::loadFromFile(string name){
+
 }

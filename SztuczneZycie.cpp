@@ -11,6 +11,12 @@
 
 using namespace std;
 
+/*
+1 - BrainOnePerceptron();
+2 - BrainManyPerceptrons();
+3 - BrainDummy();
+4 - BrainRandom();
+*/
 
 void testJoints() {
 	SDLInterface inteface;
@@ -24,17 +30,30 @@ void testSkeleton() {
 
 void testWorm() {
 	Point target(0, 0);
-	Worm * worm = new Worm(0, 400, 400, target.x, target.y);
+	Worm * worm = new Worm(4, 400, 400, target.x, target.y);
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm, 300, &target, 100);
 }
 
+void testSavingToFile(){
+	Worm * worm = new Worm(1, 400, 400, 20, 20);
+	worm->saveToFile("test.txt");
+}
+
+void testLoadingFromFile(){
+	Worm * worm = new Worm(1, "test.txt");
+
+	SDLInterface inteface;
+	inteface.displayWorm(worm, 300, worm->getEndPoint(), 50);
+}
 
 int main(int argc, char *argv[]) {
 	//testJoints();
 	//testSkeleton();
-	testWorm();
+	//testWorm();
+	//testSavingToFile();
+	testLoadingFromFile();
 
 	return 0;
 }

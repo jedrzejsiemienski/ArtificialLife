@@ -19,6 +19,9 @@ public:
 	virtual ~BrainManyPerceptrons();
 	int ** stimulate(int b1, int b2, int a1, int a2, int a3);
 
+	void saveToFile(string name);
+	void loadFromFile(string name);
+
 private:
 	int perceptronsCount;
 	Perceptron** perceptrons;
