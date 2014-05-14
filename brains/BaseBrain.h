@@ -30,6 +30,7 @@ public:
 
 	virtual Genotype* getGenotype(){return 0;};
 	virtual void setGenotype(Genotype*){};
+	virtual void reset(){};
 
 	void setInitPoint(int x, int y){initPoint->x = x; initPoint->y = y;};
 	void setEndPoint(int x, int y){endPoint->x = x; endPoint->y = y;};

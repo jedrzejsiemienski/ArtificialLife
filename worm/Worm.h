@@ -25,6 +25,7 @@ public:
 	Worm(int, string); //load from file
 	virtual ~Worm();
 	void move();
+	void reset();
 	void draw(SDL_Surface*);
 
 	Point * getPosition();

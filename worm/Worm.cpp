@@ -155,4 +155,9 @@ void Worm::loadFromFile(string name){
 	skeleton = new Skeleton(initPoint->x, initPoint->y);
 }
 
+void Worm::reset(){
+	brain->reset();
+	skeleton->reset();
+}
+
 
