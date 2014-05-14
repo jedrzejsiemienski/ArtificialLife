@@ -24,10 +24,10 @@ void testSkeleton() {
 
 void testWorm() {
 	Point target(0, 0);
-	Worm * worm = new Worm(2, 400, 400, target.x, target.y);
+	Worm * worm = new Worm(1, 400, 400, target.x, target.y);
 
 	SDLInterface inteface;
-	inteface.displayWorm(worm, 5, &target, 100);
+	inteface.displayWorm(worm, 300, &target, 100);
 }
 
 

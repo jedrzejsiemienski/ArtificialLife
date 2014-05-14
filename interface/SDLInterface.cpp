@@ -269,7 +269,6 @@ int SDLInterface::displayWorm(Worm * worm, int movementSteps, Point * target, in
 
 		if(start && currentTime - lastActionTime > interval && currentStep != movementSteps) {
 		//if(currentTime - lastActionTime > interval) {
-			//cout << "current step = " << currentStep << endl;
 			lastActionTime = currentTime;
 			drawScene();
 			timerAction();

@@ -10,6 +10,8 @@
 
 #include "../brains/BaseBrain.h"
 #include "../brains/BrainDummy.h"
+#include "../brains/BrainRandom.h"
+#include "../brains/BrainManyPerceptrons.h"
 #include "../utils/Point.h"
 #include "Skeleton.h"
 #include "SDL.h"
@@ -30,7 +32,6 @@ public:
 	float getCurrentDistanceToTarget();
 
 private:
-	float distance;
 	Point * endPoint;
 	BaseBrain* brain;
 	Skeleton* skeleton;

@@ -112,11 +112,11 @@ float Skeleton::getAlpha3(){
 
 
 float Skeleton::getBeta(int i){
-	return joints[i]->beta;
+	return normalizeBeta(joints[i]->beta);
 }
 
 float Skeleton::getAlpha(int i){
-	return joints[i]->alpha;
+	return normalizeAlpha(joints[i]->alpha, joints[i]->positive);
 }
 
 

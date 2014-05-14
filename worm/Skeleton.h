@@ -19,6 +19,8 @@
 #include <algorithm>
 #include <iterator>
 
+using namespace std;
+
 class Skeleton {
 public:
 	Skeleton(float, float);

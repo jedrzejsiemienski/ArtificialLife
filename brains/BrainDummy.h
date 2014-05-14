@@ -8,15 +8,13 @@
 #ifndef BRAINDUMMY_H_
 #define BRAINDUMMY_H_
 
-#include "BaseBrain.h";
+#include "BaseBrain.h"
 
 class BrainDummy : public BaseBrain {
 public:
 	BrainDummy();
 	virtual ~BrainDummy();
 	int ** stimulate(int b1, int b2, int a1, int a2, int a3);
-private:
-	int dataCount;
 };
 
 #endif /* BRAINDUMMY_H_ */

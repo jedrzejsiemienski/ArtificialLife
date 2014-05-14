@@ -14,10 +14,15 @@ Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
 		case 0:
 			//this.brain = new BrainOneP();
 		case 1:
-			//this.brain = new BrainManyP();
+			brain = new BrainManyPerceptrons();
+			break;
 		case 2:
-		default:
 			brain = new BrainDummy();
+			break;
+		case 3:
+			brain = new BrainRandom();
+			break;
+		default:
 			break;
 	}
 }
@@ -43,42 +48,48 @@ void Worm::move(){
 		if(result[i][1] == 1){
 			skeleton->moveLeftJoint(true);
 		} else {
+			cout << "skeleton->moveFirstJoint(false);" << endl;
 			skeleton->moveLeftJoint(false);
 		}
 	}
 
 	i++;
-	if(result[i][1] == 1){
+	if(result[i][0] == 1){
+		cout << "?" << endl;
 		if(result[i][1] == 1){
 			skeleton->moveFirstJoint(true);
 		} else {
+			cout << "skeleton->moveFirstJoint(false);" << endl;
 			skeleton->moveFirstJoint(false);
 		}
 	}
 
 	i++;
-	if(result[i][1] == 1){
+	if(result[i][0] == 1){
 		if(result[i][1] == 1){
 			skeleton->moveSecondJoint(true);
 		} else {
+			cout << "skeleton->moveSecondJoint(false);" << endl;
 			skeleton->moveSecondJoint(false);
 		}
 	}
 
 	i++;
-	if(result[i][1] == 1){
+	if(result[i][0] == 1){
 		if(result[i][1] == 1){
 			skeleton->moveThirdJoint(true);
 		} else {
+			cout << "skeleton->moveThirdJoint(false);" << endl;
 			skeleton->moveThirdJoint(false);
 		}
 	}
 
 	i++;
-	if(result[i][1] == 1){
+	if(result[i][0] == 1){
 		if(result[i][1] == 1){
 			skeleton->moveRightJoint(true);
 		} else {
+			cout << "skeleton->moveRightJoint(false);" << endl;
 			skeleton->moveRightJoint(false);
 		}
 	}
