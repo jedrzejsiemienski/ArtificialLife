@@ -7,10 +7,7 @@
 
 #include "Genotype.h"
 
-Genotype::Genotype(float f, float cr) {
-	this->f = f;
-	this->cr = cr;
-}
+Genotype::Genotype() {}
 
 Genotype::~Genotype() {
 }
@@ -31,11 +28,11 @@ Genotype* Genotype::multiply(float a){
 }
 
 //pobiera mutanta v, mutuje go ze soba i zwraca u - osobnika probnego
-Genotype* Genotype::crossWith(Genotype* x){
+Genotype* Genotype::crossWith(float cr, Genotype* x){
 	return this;
 }
 
 //mutates current with 2 given
-Genotype* Genotype::mutateWith(Genotype* x1, Genotype* x2){
+Genotype* Genotype::mutateWith(float f, Genotype* x1, Genotype* x2){
 	return this->add((x1->substract(x2))->multiply(f));
 }

@@ -21,6 +21,10 @@ Worm::Worm(int type, string name) {
 	loadFromFile(name);
 }
 
+Worm::Worm(int type, Genotype* source){
+	//la blasjdfl;asjdkf;lkasdj
+}
+
 void Worm::setBrainByType(int type){
 	switch(type){
 		case 1:

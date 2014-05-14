@@ -18,7 +18,7 @@ Environment::Environment(Point start, Point target, int type, int populationSize
 	this->f = f;
 	this->cr = cr;
 	startPopulationSize = populationSize;
-	createPopulation();
+	createBasePopulation();
 }
 
 Environment::~Environment() {}
@@ -28,19 +28,19 @@ Worm * Environment::getBestWorm() {
 }
 
 void Environment::print(){
+	list<Worm*>::iterator currentWorm;
 	for(currentWorm = population.begin(); currentWorm != population.end(); ++currentWorm){
 		cout << (*currentWorm) << endl;
 	}
 }
 
 float Environment::evolutionCycle(){
-	mutate();
-	cross();
+	createIntermediatePopulation();
 	eliminate();
 	return bestWorm->getCurrentDistanceToTarget();
 }
 
-void Environment::createPopulation(){
+void Environment::createBasePopulation(){
 	for(int i = 0; i < startPopulationSize; i++){
 		population.push_back(new Worm(type, start.x, start.y, target.x, target.y));
 	}
@@ -58,86 +58,61 @@ int Environment::compare(Worm* w1, Worm* w2) {
 	}
 }
 
-
-
-
-
-
-void Environment::mutate(){
-	/*
-	for(currentWorm = population.begin(); currentWorm != population.end(); ++currentWorm){
-		(*currentWorm)->mutate(mutationP, mutationF, mutationFt);
-	}
-	*/
+//TOFIX
+Worm* Environment::randomWorm(){
+	return bestWorm;
 }
 
-void Environment::cross(){
-	/*
-	list<Worm*> newPopulation;
-	Worm* mather;
-	Worm* father;
 
-	while(!population.empty()){
-		currentWorm = population.begin();
-	    advance(currentWorm, rand() % population.size());
-	    mather = *currentWorm;
-	    population.erase(currentWorm);
+void Environment::createIntermediatePopulation(){
+	Genotype* g1;
+	Genotype* g2;
+	Genotype* g3;
+	Genotype* current;
+	Genotype* result;
+	list<Worm*>::iterator currentWorm;
 
-	    currentWorm = population.begin();
-	    advance(currentWorm, rand() % population.size());
-	    father = *currentWorm;
-	    population.erase(currentWorm);
+	for(currentWorm = population.begin(); currentWorm != population.end(); ++currentWorm){
+		g1 = randomWorm()->getBrain()->getGenotype();
+		g2 = randomWorm()->getBrain()->getGenotype();
+		while(g1 == g2) g2 = randomWorm()->getBrain()->getGenotype();
+		g3 = randomWorm()->getBrain()->getGenotype();
+		while(g1 == g3 || g2 == g3) g3 = randomWorm()->getBrain()->getGenotype();
 
-	    newPopulation.push_back(Worm::cross(mather, father));
-	    newPopulation.push_back(Worm::cross(mather, father));
-	    newPopulation.push_back(mather);
-	    newPopulation.push_back(father);
+		current = (*currentWorm)->getBrain()->getGenotype();
+		result = current->crossWith(cr, g1->mutateWith(f, g2, g3));
+
+		intermediatePopulation.push_back(new Worm(type, result));
 	}
 
-	population = newPopulation;
-	*/
 }
 
 void Environment::eliminate(){
-	/*
-	unsigned int baseSize = population.size();
-	unsigned int targetSize = baseSize / 2;
-
-	list<Worm*>::iterator competitior1;
-	list<Worm*>::iterator competitior2;
+	list<Worm*>::iterator bp = population.begin();
+	list<Worm*>::iterator ip = intermediatePopulation.begin();
 
 	Worm* winner;
-	while(population.size() != targetSize){
-		competitior1 = population.begin();
-	    advance(competitior1, rand() % population.size());
-
-	    competitior2 = population.begin();
-	    advance(competitior2, rand() % population.size());
-
-	    Worm* loser;
-	    if(compare(*competitior1, *competitior2) == 1){
-	    	winner = *competitior1;
-	    	loser = *competitior2;
-	    	if(bestWorm == loser){
-	    		bestWorm = winner;
-	    	}
-	    	delete loser;
-	    	population.erase(competitior2);
+	while(intermediatePopulation.size() != 0){
+		Worm* loser;
+	    if(compare(*bp, *ip) == 1){
+	    	winner = *bp;
+	    	loser = *ip;
 	    } else {
-	    	winner = *competitior2;
-	    	loser = *competitior1;
-	    	if(bestWorm == loser){
-	    		bestWorm = winner;
-	    	}
-	    	delete loser;
-	    	population.erase(competitior1);
+	    	winner = *ip;
+	    	loser = *bp;
 	    }
+
+	    population.push_back(winner);
+
+	    population.pop_front();
+    	intermediatePopulation.pop_front();
 
 	    if(bestWorm != winner && compare(winner, bestWorm) == 1){
 	    	bestWorm = winner;
 	    }
+
+	    delete loser;
 	}
-	*/
 }
 
 

@@ -36,14 +36,13 @@ private:
 	Point target;
 	Worm * bestWorm;
 	list<Worm*> population;
-	list<Worm*>::iterator currentWorm;
+	list<Worm*> intermediatePopulation;
 
-	void createPopulation();
-	void mutate();
-	void cross();
+	void createBasePopulation();
+	void createIntermediatePopulation();
 	void eliminate();
-	void resetWorms();
 
+	Worm* randomWorm();
 	int compare(Worm*, Worm*);
 };
 

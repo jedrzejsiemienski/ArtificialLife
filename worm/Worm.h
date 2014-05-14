@@ -13,6 +13,7 @@
 #include "../brains/BrainRandom.h"
 #include "../brains/BrainManyPerceptrons.h"
 #include "../brains/BrainOnePerceptron.h"
+#include "../evolution/Genotype.h"
 #include "../utils/Point.h"
 #include "Skeleton.h"
 #include "SDL.h"
@@ -23,6 +24,7 @@ class Worm {
 public:
 	Worm(int, int, int, int, int);
 	Worm(int, string); //load from file
+	Worm(int, Genotype*); //create from genotype
 	virtual ~Worm();
 	void move();
 	void reset();
