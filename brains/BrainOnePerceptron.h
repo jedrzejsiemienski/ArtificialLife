@@ -8,10 +8,6 @@
 #ifndef BRAINONEPERCEPTRON_H_
 #define BRAINONEPERCEPTRON_H_
 
-#include <stdlib.h>
-#include <time.h>
-#include <fstream>
-#include <iterator>
 #include "BaseBrain.h"
 #include "../neuralNetwork/Perceptron.h"
 

@@ -8,7 +8,11 @@
 #ifndef BASEBRAIN_H_
 #define BASEBRAIN_H_
 
-#include<string>
+#include <stdlib.h>
+#include <time.h>
+#include <fstream>
+#include <iterator>
+#include <string>
 #include "../utils/Point.h"
 
 using namespace std;
