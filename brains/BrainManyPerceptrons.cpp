@@ -26,11 +26,11 @@ int ** BrainManyPerceptrons::stimulate(int b1, int b2, int a1, int a2, int a3){
 	int ** result = new int*[perceptronsCount];
 
 	int i = 0;
-	result[i] = stimulateSinglePerceptron(i, b1, b2, a1); i++;
-	result[i] = stimulateSinglePerceptron(i, b1, b2, a1); i++;
-	result[i] = stimulateSinglePerceptron(i, b1, b2, a1); i++;
-	result[i] = stimulateSinglePerceptron(i, b1, b2, a1); i++;
-	result[i] = stimulateSinglePerceptron(i, b1, b2, a1);
+	result[i] = stimulateSinglePerceptron(i, b1, a1, b2); i++; //b1
+	result[i] = stimulateSinglePerceptron(i, b1, a1, b2); i++; //a1
+	result[i] = stimulateSinglePerceptron(i, a1, a2, a3); i++; //a2
+	result[i] = stimulateSinglePerceptron(i, b1, a3, b2); i++; //a3
+	result[i] = stimulateSinglePerceptron(i, b1, a3, b2);      //b2
 
 	return result;
 }
