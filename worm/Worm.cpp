@@ -138,6 +138,10 @@ float Worm::getCurrentDistanceToTarget(){
 	return currenDtistance;
 }
 
+float Worm::getDistanceAfterNMoves(int n){
+	return 0.0; //do napisania
+}
+
 void Worm::saveToFile(string name){
 	brain->saveToFile(name);
 }

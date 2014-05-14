@@ -14,6 +14,7 @@
 #include <iterator>
 #include <string>
 #include "../utils/Point.h"
+#include "../evolution/Genotype.h"
 
 using namespace std;
 
@@ -26,6 +27,9 @@ public:
 
 	virtual void saveToFile(string name){};
 	virtual void loadFromFile(string name){};
+
+	virtual Genotype* getGenotype(){return 0;};
+	virtual void setGenotype(Genotype*){};
 
 	void setInitPoint(int x, int y){initPoint->x = x; initPoint->y = y;};
 	void setEndPoint(int x, int y){endPoint->x = x; endPoint->y = y;};

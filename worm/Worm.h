@@ -32,6 +32,7 @@ public:
 	Point * getEndPoint();
 
 	float getCurrentDistanceToTarget();
+	float getDistanceAfterNMoves(int);
 
 	void setBrain(BaseBrain*);
 	BaseBrain* getBrain();
