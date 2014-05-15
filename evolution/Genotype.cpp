@@ -7,7 +7,7 @@
 
 #include "Genotype.h"
 
-Genotype::Genotype(Perceptron * perceptrons, int perceptronsCount) {
+Genotype::Genotype(Perceptron ** perceptrons, int perceptronsCount) {
 	this->perceptrons = perceptrons;
 	this->perceptronsCount = perceptronsCount;
 }
@@ -17,12 +17,22 @@ Genotype::~Genotype() {
 	this->perceptronsCount = 0;
 }
 
+Genotype::Genotype(const Genotype & g){
+	perceptronsCount = g.perceptronsCount;
+	perceptrons = new Perceptron*[perceptronsCount];
+
+	for(int i = 0; i < perceptronsCount; i++){
+		perceptrons[i] = new Perceptron(*g.perceptrons[i]);
+	}
+}
+
 //substract given genotype from current genotype
 Genotype* Genotype::substract(Genotype* x){
-
+/*
 	for(){
 
 	}
+	*/
 	return x;
 }
 

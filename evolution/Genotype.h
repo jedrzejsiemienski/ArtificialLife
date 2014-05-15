@@ -12,13 +12,14 @@
 
 class Genotype {
 public:
-	Genotype(Perceptron *, int);
+	Genotype(Perceptron **, int);
+	Genotype(const Genotype &);
 	virtual ~Genotype();
 
 	Genotype* crossWith(float, Genotype*); //pobiera mutanta v, mutuje go ze soba i zwraca u - osobnika probnego
 	Genotype* mutateWith(float, Genotype*, Genotype*); //mutates current with 2 given
 
-	Perceptron * perceptrons;
+	Perceptron ** perceptrons;
 	int perceptronsCount;
 
 private:
