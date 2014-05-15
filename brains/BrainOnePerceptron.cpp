@@ -71,8 +71,8 @@ Genotype* BrainOnePerceptron::getGenotype(){
 
 
 void BrainOnePerceptron::setGenotype(Genotype* g){
-
-
+	perceptron->setChromosomes(g->perceptrons[0]->getChromosomes());
+	delete g;
 }
 
 

@@ -76,8 +76,10 @@ Genotype* BrainManyPerceptrons::getGenotype(){
 
 
 void BrainManyPerceptrons::setGenotype(Genotype* g){
-
-
+	for(int i = 0; i < perceptronsCount; i++){
+		perceptrons[i]->setChromosomes(g->perceptrons[i]->getChromosomes());
+	}
+	delete g;
 }
 
 
