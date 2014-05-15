@@ -28,27 +28,61 @@ Genotype::Genotype(const Genotype & g){
 
 //substract given genotype from current genotype
 Genotype* Genotype::substract(Genotype* x){
-/*
-	for(){
-
+	Genotype * result = new Genotype(*this);
+	for(int i = 0; i < result->perceptronsCount; i++){
+		Chromosom** resultChr = result->perceptrons[i]->getChromosomes();
+		Chromosom** baseChr = x->perceptrons[i]->getChromosomes();
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			resultChr[j]->substract(baseChr[j]);
+		}
 	}
-	*/
-	return x;
+	return result;
 }
 
 //add given genotype to current genotype
 Genotype* Genotype::add(Genotype* x){
-	return x;
+	Genotype * result = new Genotype(*this);
+	for(int i = 0; i < result->perceptronsCount; i++){
+		Chromosom** resultChr = result->perceptrons[i]->getChromosomes();
+		Chromosom** baseChr = x->perceptrons[i]->getChromosomes();
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			resultChr[j]->add(baseChr[j]);
+		}
+	}
+	return result;
 }
 
 //mutliplies everything from genotype by given number
 Genotype* Genotype::multiply(float a){
-	return this;
+	Genotype * result = new Genotype(*this);
+	for(int i = 0; i < result->perceptronsCount; i++){
+		Chromosom** resultChr = result->perceptrons[i]->getChromosomes();
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			resultChr[j]->multiply(a);
+		}
+	}
+	return result;
 }
 
 //pobiera mutanta v, mutuje go ze soba i zwraca u - osobnika probnego
 Genotype* Genotype::crossWith(float cr, Genotype* x){
-	return this;
+	Genotype * result = new Genotype(*this);
+	for(int i = 0; i < result->perceptronsCount; i++){
+		Chromosom** resultChr = result->perceptrons[i]->getChromosomes();
+		Chromosom** baseChr = x->perceptrons[i]->getChromosomes();
+
+		Chromosom** crossedChr = new Chromosom*[result->perceptrons[i]->getTotalAmountOfNeurons()];
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			crossedChr[j] = ChromosomesCrosser::cross(resultChr[j], baseChr[j], crossingTypes(HOMOGENEOUS), cr);
+		}
+		result->perceptrons[i]->setChromosomes(crossedChr);
+
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			delete crossedChr[j];
+		}
+		delete[] crossedChr;
+	}
+	return result;
 }
 
 //mutates current with 2 given

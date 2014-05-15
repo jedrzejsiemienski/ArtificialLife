@@ -25,6 +25,10 @@ public:
 	Chromosom(int, int, Pair*, float*);
 	virtual ~Chromosom();
 
+	void substract(Chromosom*);
+	void add(Chromosom*);
+	void multiply(float);
+
 	int pairsCount;
 	int floatsCount;
 

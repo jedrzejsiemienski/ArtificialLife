@@ -46,3 +46,37 @@ string Chromosom::toString(){
 	return result;
 }
 
+void Chromosom::substract(Chromosom* x){
+	for(int i = 0; i < pairsCount; i++){
+		pairs[i].t -= x->pairs[i].t;
+		pairs[i].w -= x->pairs[i].w;
+	}
+
+	for(int i = 0; i < floatsCount; i++){
+		floats[i] -= x->floats[i];
+	}
+}
+
+void Chromosom::add(Chromosom* x){
+	for(int i = 0; i < pairsCount; i++){
+		pairs[i].t += x->pairs[i].t;
+		pairs[i].w += x->pairs[i].w;
+	}
+
+	for(int i = 0; i < floatsCount; i++){
+		floats[i] += x->floats[i];
+	}
+}
+
+void Chromosom::multiply(float a){
+	for(int i = 0; i < pairsCount; i++){
+		pairs[i].t *= a;
+		pairs[i].w *= a;
+	}
+
+	for(int i = 0; i < floatsCount; i++){
+		floats[i] *= a;
+	}
+
+}
+
