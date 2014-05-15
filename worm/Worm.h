@@ -24,7 +24,7 @@ class Worm {
 public:
 	Worm(int, int, int, int, int);
 	Worm(int, string); //load from file
-	Worm(int, Genotype*); //create from genotype
+	Worm(int, int, int, int, int, Genotype*); //create from genotype
 	virtual ~Worm();
 	void move();
 	void reset();

@@ -21,9 +21,12 @@ Worm::Worm(int type, string name) {
 	loadFromFile(name);
 }
 
-//TOFIX
-Worm::Worm(int type, Genotype* source){
-	//la blasjdfl;asjdkf;lkasdj
+Worm::Worm(int type, int startX, int startY, int targetX, int targetY, Genotype* source){
+	initPoint = new Point(startX, startY);
+	endPoint = new Point(targetX, targetY);
+	skeleton = new Skeleton(startX, startY);
+	setBrainByType(type);
+	brain->setGenotype(source);
 }
 
 void Worm::setBrainByType(int type){

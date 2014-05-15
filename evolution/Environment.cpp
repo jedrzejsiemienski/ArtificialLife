@@ -82,7 +82,14 @@ void Environment::createIntermediatePopulation(){
 		current = (*currentWorm)->getBrain()->getGenotype();
 		result = current->crossWith(cr, g1->mutateWith(f, g2, g3));
 
-		intermediatePopulation.push_back(new Worm(type, result));
+		intermediatePopulation.push_back(new Worm(
+			type,
+			(*currentWorm)->getInitPoint()->x,
+			(*currentWorm)->getInitPoint()->y,
+			(*currentWorm)->getEndPoint()->x,
+			(*currentWorm)->getEndPoint()->y,
+			result
+		));
 	}
 
 }
