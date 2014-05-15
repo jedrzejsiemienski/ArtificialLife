@@ -21,6 +21,7 @@ Worm::Worm(int type, string name) {
 	loadFromFile(name);
 }
 
+//TOFIX
 Worm::Worm(int type, Genotype* source){
 	//la blasjdfl;asjdkf;lkasdj
 }
@@ -159,6 +160,7 @@ void Worm::loadFromFile(string name){
 	skeleton = new Skeleton(initPoint->x, initPoint->y);
 }
 
+//TOFIX
 void Worm::reset(){
 	brain->reset();
 	skeleton->reset();

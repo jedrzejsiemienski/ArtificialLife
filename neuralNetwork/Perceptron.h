@@ -20,6 +20,7 @@ typedef std::vector<KonwerterDanych*> WarstwaKonwerterow;
 class Perceptron {
 public:
 	Perceptron(int, int*, int*, int*);
+	Perceptron(const Perceptron &);
 	~Perceptron();
 	int * stimulate(int*);
 

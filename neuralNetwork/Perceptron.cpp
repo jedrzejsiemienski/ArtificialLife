@@ -57,6 +57,49 @@ Perceptron::Perceptron(int givenLayersAmount, int* neuronsAmounts, int* givenRan
 	}
 }
 
+Perceptron::Perceptron(const Perceptron & p){
+	int firstLayerSize = (*p.layers.begin())->size();
+	buckets = new int[firstLayerSize];
+	for (int i = 0; i < firstLayerSize; i++){
+		buckets[i] = p.buckets[i];
+	}
+
+	ranges = new int[firstLayerSize];
+	for (int i = 0; i < firstLayerSize; i++){
+		ranges[i] = p.buckets[i];
+	}
+
+	layersAmount = p.layersAmount;
+
+	for (int i = 0; i < firstLayerSize; i++){
+		converters.push_back(new KonwerterDanych(buckets[i], ranges[i]));
+	}
+
+	float timeBase = 0.01;
+
+	totalAmountOfNeurons = 0;
+
+	int inputsAmounts;
+	WarstwaNeuronow* layer;
+	Warstwy::const_iterator pLayersIter = p.layers.begin();
+	for(int i = 0; i < layersAmount; i++) {
+		layer = new WarstwaNeuronow();
+		totalAmountOfNeurons += (*pLayersIter)->size();
+		for (unsigned int j = 0; j != (*pLayersIter)->size(); j++){
+ 			if(i > 0){
+ 				pLayersIter--;
+				inputsAmounts = (*pLayersIter)->size();
+				pLayersIter++;
+			} else {
+				inputsAmounts = buckets[j];
+			}
+			layer->push_back(new NeuronImpulsowy(inputsAmounts, timeBase));
+			pLayersIter++;
+		}
+		layers.push_back(layer);
+	}
+}
+
 Perceptron::~Perceptron() {
 	WarstwaKonwerterow::iterator iterator;
 	for(iterator = converters.begin(); iterator != converters.end(); ++iterator){
