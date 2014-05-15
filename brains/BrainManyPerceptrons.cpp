@@ -69,6 +69,19 @@ void BrainManyPerceptrons::initPerceptrons(){
 	delete[] givenBuckets;
 }
 
+
+Genotype* BrainManyPerceptrons::getGenotype(){
+	return new Genotype(perceptrons, perceptronsCount);
+}
+
+
+void BrainManyPerceptrons::setGenotype(Genotype* g){
+
+
+}
+
+
+
 void BrainManyPerceptrons::saveToFile(string name){
 	ofstream file;
 

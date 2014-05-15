@@ -62,6 +62,21 @@ void BrainOnePerceptron::initPerceptron(){
 	delete[] givenBuckets;
 }
 
+
+Genotype* BrainOnePerceptron::getGenotype(){
+	Perceptron** p = new Perceptron*[1];
+	p[0] = perceptron;
+	return new Genotype(p, 1);
+}
+
+
+void BrainOnePerceptron::setGenotype(Genotype* g){
+
+
+}
+
+
+
 void BrainOnePerceptron::saveToFile(string name){
 	ofstream file;
 
