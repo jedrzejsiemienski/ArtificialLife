@@ -14,6 +14,7 @@
 #include "../brains/BrainManyPerceptrons.h"
 #include "../brains/BrainOnePerceptron.h"
 #include "../evolution/Genotype.h"
+#include "../neuralNetwork/NeuronImpulsowy.h"
 #include "../utils/Point.h"
 #include "Skeleton.h"
 #include "SDL.h"
@@ -22,7 +23,7 @@ using namespace std;
 
 class Worm {
 public:
-	Worm(int, int, int, int, int);
+	Worm(int, int, int, int, int, int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 	Worm(int, string); //load from file
 	Worm(int, int, int, int, int, Genotype*); //create from genotype
 	virtual ~Worm();
@@ -44,7 +45,7 @@ public:
 
 private:
 	void loadFromFile(string);
-	void setBrainByType(int);
+	void setBrainByType(int, int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 
 	Point * initPoint;
 	Point * endPoint;

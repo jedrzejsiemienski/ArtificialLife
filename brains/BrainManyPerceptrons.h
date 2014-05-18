@@ -15,7 +15,7 @@
 
 class BrainManyPerceptrons : public BaseBrain {
 public:
-	BrainManyPerceptrons();
+	BrainManyPerceptrons(int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 	virtual ~BrainManyPerceptrons();
 	int ** stimulate(int b1, int b2, int a1, int a2, int a3);
 
@@ -29,7 +29,7 @@ private:
 	int perceptronsCount;
 	Perceptron** perceptrons;
 
-	void initPerceptrons();
+	void initPerceptrons(int);
 	int * stimulateSinglePerceptron(int, int, int, int);
 };
 

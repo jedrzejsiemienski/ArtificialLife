@@ -24,25 +24,25 @@ NeuronImpulsowy::NeuronImpulsowy(float givenTimeBase) {
 */
 
 
-NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase) {
+NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase, int initVal) {
 	//srand(time(NULL));
 
-	eta = randomNumberFromRange(4.0, 100000.0);//0.01;   //wsplczynnik zamulenia  ---- TO
-	theta = randomNumberFromRange(20.0, 1000.0);//0.4; //prog wyjscia  ---- TO
+	eta = returnNumber(initVal, randomNumberFromRange(4.0, 100000.0));//0.01;   //wsplczynnik zamulenia  ---- TO
+	theta = returnNumber(initVal, randomNumberFromRange(20.0, 1000.0));//0.4; //prog wyjscia  ---- TO
 	g = givenG;  //ilosc neurownow wejsciowych = gamma.length, tzn ilosc wejsc - givenG!!!
 	T = givenTimeBase;
 
 	w = new float [g];	 //tablica wag wejsc neuronu ---- TO
 	for (int i = 0; i < g; i++){
-		w[i] = randomNumber();//0.25;
+		w[i] = returnNumber(initVal, randomNumber());//0.25;
 	}
 
 	talInput = new float [g]; //tablica z wspolczynnikami mowiacymi o tym przez jaki czas dany neuron wplywa na na stan naszego
 	for (int i = 0; i < g; i++){  //---- TO
-		talInput[i] = randomNumberFromRange(1.0, 10000.0);//0.01;
+		talInput[i] = returnNumber(initVal, randomNumberFromRange(1.0, 10000.0));//0.01;
 	}
 
-	talOutput = randomNumber();//0.1; //wspolczynnik mowiacy o tym jak mocno nas zmula w czasie  ---- TO
+	talOutput = returnNumber(initVal, randomNumber());//0.1; //wspolczynnik mowiacy o tym jak mocno nas zmula w czasie  ---- TO
 	uf = new float [g];	 //tablica czastkowych zmian stanu zwiazaynch z wejsciami
 	for (int i = 0; i < g; i++){
 		uf[i] = 0;
@@ -50,6 +50,10 @@ NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase) {
 
 	ut = 0;	 //czastkowa zmiana stanu zwiazana z zamula
 	y = 0; //wyjscie neuronu
+}
+
+float NeuronImpulsowy::returnNumber(int given, float random){
+	return given == USE_RANDOM_VALUE ? random : (float)given;
 }
 
 NeuronImpulsowy::~NeuronImpulsowy() {

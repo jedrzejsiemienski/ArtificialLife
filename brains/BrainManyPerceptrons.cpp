@@ -7,11 +7,11 @@
 
 #include "BrainManyPerceptrons.h"
 
-BrainManyPerceptrons::BrainManyPerceptrons() : BaseBrain() {
+BrainManyPerceptrons::BrainManyPerceptrons(int initVal) : BaseBrain() {
 	srand (time(NULL));
 	perceptronsCount = 5;
 	perceptrons = new Perceptron*[perceptronsCount];
-	initPerceptrons();
+	initPerceptrons(initVal);
 }
 
 BrainManyPerceptrons::~BrainManyPerceptrons() {
@@ -45,7 +45,7 @@ int * BrainManyPerceptrons::stimulateSinglePerceptron(int perceptron, int x, int
 	return result;
 }
 
-void BrainManyPerceptrons::initPerceptrons(){
+void BrainManyPerceptrons::initPerceptrons(int initVal){
 	int layersAmount = 3;
 	int * neuronsAmount = new int[layersAmount];
 
@@ -61,7 +61,7 @@ void BrainManyPerceptrons::initPerceptrons(){
 	}
 
 	for(int i=0; i < perceptronsCount; i++){
-		perceptrons[i] = new Perceptron(layersAmount, neuronsAmount, givenRanges, givenBuckets);
+		perceptrons[i] = new Perceptron(layersAmount, neuronsAmount, givenRanges, givenBuckets, initVal);
 	}
 
 	delete[] neuronsAmount;

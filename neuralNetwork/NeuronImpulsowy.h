@@ -16,8 +16,9 @@
 
 class NeuronImpulsowy {
 public:
-	//NeuronImpulsowy(float);
-	NeuronImpulsowy(int, float);
+	enum { USE_RANDOM_VALUE = -100 };
+
+	NeuronImpulsowy(int, float, int initVal = USE_RANDOM_VALUE);
 	virtual ~NeuronImpulsowy();
 	int compute(int*);
 
@@ -45,6 +46,8 @@ private:
 	float  ut;	 //czastkowa zmiana stanu zwiazana z zamula
 
 	int y; //wyjscie neuronu
+
+	float returnNumber(int, float);
 
 };
 

@@ -37,12 +37,12 @@ void testWorm() {
 }
 
 void testSavingToFile(){
-	Worm * worm = new Worm(2, 400, 400, 20, 20);
-	worm->saveToFile("test2.txt");
+	Worm * worm = new Worm(2, 400, 400, 20, 20, 1);
+	worm->saveToFile("test3.txt");
 }
 
 void testLoadingFromFile(){
-	Worm * worm = new Worm(2, "test2.txt");
+	Worm * worm = new Worm(2, "test3.txt");
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm, 300, worm->getEndPoint(), 50);

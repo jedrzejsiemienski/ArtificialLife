@@ -7,11 +7,11 @@
 
 #include "Worm.h"
 
-Worm::Worm(int type, int startX, int startY, int targetX, int targetY) {
+Worm::Worm(int type, int startX, int startY, int targetX, int targetY, int initVal) {
 	initPoint = new Point(startX, startY);
 	endPoint = new Point(targetX, targetY);
 	skeleton = new Skeleton(startX, startY);
-	setBrainByType(type);
+	setBrainByType(type, initVal);
 }
 
 Worm::Worm(int type, string name) {
@@ -29,13 +29,13 @@ Worm::Worm(int type, int startX, int startY, int targetX, int targetY, Genotype*
 	brain->setGenotype(source);
 }
 
-void Worm::setBrainByType(int type){
+void Worm::setBrainByType(int type, int initVal){
 	switch(type){
 		case 1:
-			setBrain(new BrainOnePerceptron());
+			setBrain(new BrainOnePerceptron(initVal));
 			break;
 		case 2:
-			setBrain(new BrainManyPerceptrons());
+			setBrain(new BrainManyPerceptrons(initVal));
 			break;
 		case 3:
 			setBrain(new BrainDummy());

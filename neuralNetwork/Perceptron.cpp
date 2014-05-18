@@ -19,7 +19,7 @@ using namespace std;
  * - ilosc neuronow w warstwie ukrytej
  * - ilosc wyjsc (neurony w warstwie wyjsciowej)
  */
-Perceptron::Perceptron(int givenLayersAmount, int* neuronsAmounts, int* givenRanges, int* givenBuckets) {
+Perceptron::Perceptron(int givenLayersAmount, int* neuronsAmounts, int* givenRanges, int* givenBuckets, int initVal) {
 	buckets = new int[neuronsAmounts[0]];
 	for (int i = 0; i < neuronsAmounts[0]; i++){
 		buckets[i] = givenBuckets[i];
@@ -51,7 +51,7 @@ Perceptron::Perceptron(int givenLayersAmount, int* neuronsAmounts, int* givenRan
 			} else {
 				inputsAmounts = buckets[j];
 			}
-			layer->push_back(new NeuronImpulsowy(inputsAmounts, timeBase));
+			layer->push_back(new NeuronImpulsowy(inputsAmounts, timeBase, initVal));
 		}
 		layers.push_back(layer);
 	}

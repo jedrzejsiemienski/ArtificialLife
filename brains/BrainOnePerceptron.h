@@ -15,7 +15,7 @@ using namespace std;
 
 class BrainOnePerceptron : public BaseBrain{
 public:
-	BrainOnePerceptron();
+	BrainOnePerceptron(int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 	virtual ~BrainOnePerceptron();
 	int ** stimulate(int b1, int b2, int a1, int a2, int a3);
 
@@ -27,7 +27,7 @@ public:
 
 private:
 	Perceptron* perceptron;
-	void initPerceptron();
+	void initPerceptron(int);
 };
 
 #endif /* BRAINONEPERCEPTRON_H_ */

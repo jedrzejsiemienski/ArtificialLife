@@ -19,7 +19,7 @@ typedef std::vector<KonwerterDanych*> WarstwaKonwerterow;
 
 class Perceptron {
 public:
-	Perceptron(int, int*, int*, int*);
+	Perceptron(int, int*, int*, int*, int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 	Perceptron(const Perceptron &);
 	~Perceptron();
 	int * stimulate(int*);

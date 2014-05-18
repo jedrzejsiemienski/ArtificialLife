@@ -8,9 +8,9 @@
 #include "BrainOnePerceptron.h"
 
 
-BrainOnePerceptron::BrainOnePerceptron() : BaseBrain() {
+BrainOnePerceptron::BrainOnePerceptron(int initVal) : BaseBrain() {
 	srand (time(NULL));
-	initPerceptron();
+	initPerceptron(initVal);
 }
 
 BrainOnePerceptron::~BrainOnePerceptron() {
@@ -40,7 +40,7 @@ int ** BrainOnePerceptron::stimulate(int b1, int b2, int a1, int a2, int a3){
 }
 
 
-void BrainOnePerceptron::initPerceptron(){
+void BrainOnePerceptron::initPerceptron(int initVal){
 	int layersAmount = 3;
 	int * neuronsAmount = new int[layersAmount];
 
@@ -55,7 +55,7 @@ void BrainOnePerceptron::initPerceptron(){
 		givenBuckets[i] = 20;
 	}
 
-	perceptron = new Perceptron(layersAmount, neuronsAmount, givenRanges, givenBuckets);
+	perceptron = new Perceptron(layersAmount, neuronsAmount, givenRanges, givenBuckets, initVal);
 
 	delete[] neuronsAmount;
 	delete[] givenRanges;

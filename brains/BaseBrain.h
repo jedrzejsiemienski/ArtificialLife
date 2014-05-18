@@ -15,6 +15,7 @@
 #include <string>
 #include "../utils/Point.h"
 #include "../evolution/Genotype.h"
+#include "../neuralNetwork/NeuronImpulsowy.h"
 
 using namespace std;
 
