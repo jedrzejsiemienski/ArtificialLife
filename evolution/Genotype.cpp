@@ -8,13 +8,25 @@
 #include "Genotype.h"
 
 Genotype::Genotype(Perceptron ** perceptrons, int perceptronsCount) {
-	this->perceptrons = perceptrons;
 	this->perceptronsCount = perceptronsCount;
+	this->perceptrons = new Perceptron*[perceptronsCount];
+	for(int i = 0; i < perceptronsCount; i++){
+		this->perceptrons[i] = new Perceptron(*perceptrons[i]);
+	}
+}
+
+Genotype::Genotype(Perceptron * perceptron) {
+	perceptronsCount = 1;
+	perceptrons = new Perceptron*[perceptronsCount];
+	perceptrons[0] = new Perceptron(*perceptron);
 }
 
 Genotype::~Genotype() {
-	this->perceptrons = NULL;
-	this->perceptronsCount = 0;
+	for(int i = 0; i < perceptronsCount; i++){
+		delete perceptrons[i];
+	}
+	delete[] perceptrons;
+	perceptronsCount = 0;
 }
 
 Genotype::Genotype(const Genotype & g){
@@ -35,6 +47,15 @@ Genotype* Genotype::substract(Genotype* x){
 		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
 			resultChr[j]->substract(baseChr[j]);
 		}
+		result->perceptrons[i]->setChromosomes(resultChr);
+
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			delete resultChr[j];
+			delete baseChr[j];
+		}
+		delete[] resultChr;
+		delete[] baseChr;
+
 	}
 	return result;
 }
@@ -48,6 +69,14 @@ Genotype* Genotype::add(Genotype* x){
 		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
 			resultChr[j]->add(baseChr[j]);
 		}
+		result->perceptrons[i]->setChromosomes(resultChr);
+
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			delete resultChr[j];
+			delete baseChr[j];
+		}
+		delete[] resultChr;
+		delete[] baseChr;
 	}
 	return result;
 }
@@ -60,6 +89,12 @@ Genotype* Genotype::multiply(float a){
 		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
 			resultChr[j]->multiply(a);
 		}
+		result->perceptrons[i]->setChromosomes(resultChr);
+
+		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			delete resultChr[j];
+		}
+		delete[] resultChr;
 	}
 	return result;
 }
@@ -78,8 +113,12 @@ Genotype* Genotype::crossWith(float cr, Genotype* x){
 		result->perceptrons[i]->setChromosomes(crossedChr);
 
 		for(int j = 0; j < result->perceptrons[i]->getTotalAmountOfNeurons(); j++){
+			delete resultChr[j];
+			delete baseChr[j];
 			delete crossedChr[j];
 		}
+		delete[] resultChr;
+		delete[] baseChr;
 		delete[] crossedChr;
 	}
 	return result;
@@ -87,7 +126,12 @@ Genotype* Genotype::crossWith(float cr, Genotype* x){
 
 //mutates current with 2 given
 Genotype* Genotype::mutateWith(float f, Genotype* x1, Genotype* x2){
-	return this->add((x1->substract(x2))->multiply(f));
+	Genotype *substract = x1->substract(x2);
+	Genotype *mutlipiled = substract->multiply(f);
+	Genotype *result = this->add(mutlipiled);
+	delete substract;
+	delete mutlipiled;
+	return result;
 }
 
 bool assertEqualStructure(Genotype* g){

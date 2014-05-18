@@ -53,6 +53,7 @@ void Worm::setBrainByType(int type, int initVal){
 Worm::~Worm() {
 	delete skeleton;
 	delete brain;
+	delete initPoint;
 	delete endPoint;
 }
 

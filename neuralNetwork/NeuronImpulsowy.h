@@ -19,6 +19,7 @@ public:
 	enum { USE_RANDOM_VALUE = -100 };
 
 	NeuronImpulsowy(int, float, int initVal = USE_RANDOM_VALUE);
+	NeuronImpulsowy(const NeuronImpulsowy &);
 	virtual ~NeuronImpulsowy();
 	int compute(int*);
 

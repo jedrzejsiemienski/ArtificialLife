@@ -24,6 +24,10 @@ private:
 	void testWorm();
 	void testSavingToFile();
 	void testLoadingFromFile();
+	void testGenotypeOperations(int type = 2);
+	void testWormToAndFromGenotype(int type = 2);
+	void testMemoryLeaks();
+	void testEvolutionaryAlgorithm();
 };
 
 #endif /* TEST_H_ */

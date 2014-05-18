@@ -44,11 +44,119 @@ void Test::testLoadingFromFile(){
 	inteface.displayWorm(worm, 300, worm->getEndPoint(), 50);
 }
 
+void Test::testGenotypeOperations(int type){
+	//type 2;
+	Worm * worm1 = new Worm(type, 400, 400, 20, 20, 2);
+	worm1->saveToFile("base1Type2.txt");
+	Genotype * g1 = worm1->getBrain()->getGenotype();
+
+	Worm * worm2 = new Worm(type, 400, 400, 20, 20, 1);
+	worm2->saveToFile("base2Type2.txt");
+	Genotype * g2 = worm2->getBrain()->getGenotype();
+
+	//Genotype* substract(Genotype*);
+//	Worm * wormSub = new Worm(2, 400, 400, 20, 20, g1->substract(g2));
+//	wormSub->saveToFile("subType2.txt");
+	Worm * wormSub = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainSub = wormSub->getBrain();
+	brainSub->setGenotype(g1->substract(g2));
+	wormSub->saveToFile("subType2.txt");
+
+	//Genotype* add(Genotype*);
+	Worm * wormAdd = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainAdd = wormAdd->getBrain();
+	brainAdd->setGenotype(g1->add(g2));
+	wormAdd->saveToFile("addType2.txt");
+
+	//Genotype* multiply(float); //mutliplies everything from genotype by given number
+	Worm * wormMult = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainMult = wormMult->getBrain();
+	brainMult->setGenotype(g1->multiply(2.0));
+	wormMult->saveToFile("multType2.txt");
+
+	//Genotype* crossWith(float cr, Genotype* x)
+	Worm * wormCross = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainCross = wormCross->getBrain();
+	brainCross->setGenotype(g1->crossWith(0.5f, g2));
+	wormCross->saveToFile("crossType2.txt");
+
+	//Genotype* mutateWith(float f, Genotype* x1, Genotype* x2);
+	Worm * wormMutate = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainMutate = wormMutate->getBrain();
+	Genotype* g3 = brainSub->getGenotype();
+	brainMutate->setGenotype(g3->mutateWith(0.5f, g1, g2));
+	wormMutate->saveToFile("mutateType2.txt");
+
+	delete worm1;
+	delete worm2;
+	delete wormSub;
+	delete wormAdd;
+	delete wormMult;
+	delete wormCross;
+	delete wormMutate;
+	delete g1;
+	delete g2;
+	delete g3;
+}
+
+void Test::testWormToAndFromGenotype(int type){
+	Worm * worm1 = new Worm(type, 400, 400, 20, 20);
+	worm1->saveToFile("g1.txt");
+
+	Worm * worm2 = new Worm(type, 400, 400, 20, 20, worm1->getBrain()->getGenotype());
+	worm2->saveToFile("g2.txt");
+
+	Worm * worm3 = new Worm(type, 400, 400, 20, 20, worm2->getBrain()->getGenotype());
+	worm3->saveToFile("g3.txt");
+
+	delete worm1;
+	delete worm2;
+	delete worm3;
+}
+
+void Test::testMemoryLeaks(){
+	for(float i = 0; i < 100000000.0f; i++){
+		//skeleton
+		Skeleton * skeleton = new Skeleton(1.0f, 1.0f);
+		delete skeleton;
+
+		//brain
+		BaseBrain * brain = new BrainOnePerceptron();
+		delete brain;
+		BaseBrain * brain2 = new BrainManyPerceptrons();
+		delete brain2;
+
+		//worm
+		Worm * worm1 = new Worm(1, 400, 400, 20, 20);
+		Genotype * g1 = worm1->getBrain()->getGenotype();
+		delete g1;
+		delete worm1;
+
+		Worm * worm2 = new Worm(2, 400, 400, 20, 20);
+		Genotype * g2 = worm2->getBrain()->getGenotype();
+		delete g2;
+		delete worm2;
+
+		testGenotypeOperations(1);
+		testGenotypeOperations();
+
+		testWormToAndFromGenotype(1);
+		testWormToAndFromGenotype();
+	}
+}
+
+void Test::testEvolutionaryAlgorithm(){
+
+}
 
 void Test::performTests(){
-	testJoints();
+	//testJoints();
 	//testSkeleton();
 	//testWorm();
 	//testSavingToFile();
 	//testLoadingFromFile();
+	//testGenotypeOperations(1);
+	//testWormToAndFromGenotype();
+	//testMemoryLeaks();
+	testEvolutionaryAlgorithm()
 }

@@ -75,26 +75,16 @@ Perceptron::Perceptron(const Perceptron & p){
 		converters.push_back(new KonwerterDanych(buckets[i], ranges[i]));
 	}
 
-	float timeBase = 0.01;
-
 	totalAmountOfNeurons = 0;
 
-	int inputsAmounts;
 	WarstwaNeuronow* layer;
-	Warstwy::const_iterator pLayersIter = p.layers.begin();
-	for(int i = 0; i < layersAmount; i++) {
+	Warstwy::const_iterator pLayersIter;
+	WarstwaNeuronow::const_iterator pSingleLayerIter;
+	for(pLayersIter = p.layers.begin(); pLayersIter != p.layers.end(); ++pLayersIter){
 		layer = new WarstwaNeuronow();
 		totalAmountOfNeurons += (*pLayersIter)->size();
-		for (unsigned int j = 0; j != (*pLayersIter)->size(); j++){
- 			if(i > 0){
- 				pLayersIter--;
-				inputsAmounts = (*pLayersIter)->size();
-				pLayersIter++;
-			} else {
-				inputsAmounts = buckets[j];
-			}
-			layer->push_back(new NeuronImpulsowy(inputsAmounts, timeBase));
-			pLayersIter++;
+		for(pSingleLayerIter = (*pLayersIter)->begin(); pSingleLayerIter != (*pLayersIter)->end(); ++pSingleLayerIter){
+			layer->push_back(new NeuronImpulsowy(**pSingleLayerIter));
 		}
 		layers.push_back(layer);
 	}

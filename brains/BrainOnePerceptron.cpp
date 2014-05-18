@@ -64,14 +64,17 @@ void BrainOnePerceptron::initPerceptron(int initVal){
 
 
 Genotype* BrainOnePerceptron::getGenotype(){
-	Perceptron** p = new Perceptron*[1];
-	p[0] = perceptron;
-	return new Genotype(p, 1);
+	return new Genotype(perceptron);
 }
 
 
 void BrainOnePerceptron::setGenotype(Genotype* g){
-	perceptron->setChromosomes(g->perceptrons[0]->getChromosomes());
+	Chromosom **ch = g->perceptrons[0]->getChromosomes();
+	perceptron->setChromosomes(ch);
+	for(int j = 0; j < perceptron->getTotalAmountOfNeurons(); j++){
+		delete ch[j];
+	}
+	delete[] ch;
 	delete g;
 }
 

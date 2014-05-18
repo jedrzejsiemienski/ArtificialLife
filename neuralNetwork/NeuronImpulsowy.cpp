@@ -25,7 +25,7 @@ NeuronImpulsowy::NeuronImpulsowy(float givenTimeBase) {
 
 
 NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase, int initVal) {
-	//srand(time(NULL));
+	srand(time(NULL));
 
 	eta = returnNumber(initVal, randomNumberFromRange(4.0, 100000.0));//0.01;   //wsplczynnik zamulenia  ---- TO
 	theta = returnNumber(initVal, randomNumberFromRange(20.0, 1000.0));//0.4; //prog wyjscia  ---- TO
@@ -46,6 +46,32 @@ NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase, int initVal) {
 	uf = new float [g];	 //tablica czastkowych zmian stanu zwiazaynch z wejsciami
 	for (int i = 0; i < g; i++){
 		uf[i] = 0;
+	}
+
+	ut = 0;	 //czastkowa zmiana stanu zwiazana z zamula
+	y = 0; //wyjscie neuronu
+}
+
+NeuronImpulsowy::NeuronImpulsowy(const NeuronImpulsowy & n){
+	eta = n.eta;
+	theta = n.theta;
+	g = n.g;
+	T = n.T;
+
+	w = new float [g];
+	for (int i = 0; i < g; i++){
+		w[i] = n.w[i];
+	}
+
+	talInput = new float [g];
+	for (int i = 0; i < g; i++){
+		talInput[i] = n.talInput[i];
+	}
+
+	talOutput = n.talOutput;
+	uf = new float [g];
+	for (int i = 0; i < g; i++){
+		uf[i] = n.uf[i];
 	}
 
 	ut = 0;	 //czastkowa zmiana stanu zwiazana z zamula

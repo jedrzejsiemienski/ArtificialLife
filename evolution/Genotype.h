@@ -15,19 +15,21 @@
 class Genotype {
 public:
 	Genotype(Perceptron **, int);
+	Genotype(Perceptron *);
 	Genotype(const Genotype &);
 	virtual ~Genotype();
 
 	Genotype* crossWith(float, Genotype*); //pobiera mutanta v, mutuje go ze soba i zwraca u - osobnika probnego
 	Genotype* mutateWith(float, Genotype*, Genotype*); //mutates current with 2 given
 
+	Genotype* substract(Genotype*);  //substract given genotype from current genotype
+	Genotype* add(Genotype*);  //add given genotype to current genotype
+	Genotype* multiply(float); //mutliplies everything from genotype by given number
+
 	Perceptron ** perceptrons;
 	int perceptronsCount;
 
 private:
-	Genotype* substract(Genotype*);  //substract given genotype from current genotype
-	Genotype* add(Genotype*);  //add given genotype to current genotype
-	Genotype* multiply(float); //mutliplies everything from genotype by given number
 
 	bool assertEqualStructure(Genotype*);
 
