@@ -12,6 +12,7 @@
 #include "../worm/Worm.h"
 #include "../utils/Point.h"
 #include <math.h>
+#include <stdlib.h>
 #include <list>
 
 class Environment {
@@ -21,7 +22,10 @@ public:
 
 	Worm * getBestWorm();
 
+	float epochs(int);
 	float evolutionCycle();
+
+	void clear();
 
 	void print();
 
@@ -42,7 +46,7 @@ private:
 	void createIntermediatePopulation();
 	void eliminate();
 
-	Worm* randomWorm();
+	Worm* getWromFromPopulationAt(int);
 	int compare(Worm*, Worm*);
 };
 

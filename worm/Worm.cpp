@@ -148,7 +148,12 @@ float Worm::getCurrentDistanceToTarget(){
 }
 
 float Worm::getDistanceAfterNMoves(int n){
-	return 0.0; //do napisania
+	for(int i = 0; i < n; i++){
+		move();
+	}
+	float result = getCurrentDistanceToTarget();
+	reset();
+	return result;
 }
 
 void Worm::saveToFile(string name){

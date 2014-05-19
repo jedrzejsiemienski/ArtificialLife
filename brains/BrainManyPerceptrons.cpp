@@ -8,7 +8,6 @@
 #include "BrainManyPerceptrons.h"
 
 BrainManyPerceptrons::BrainManyPerceptrons(int initVal) : BaseBrain() {
-	srand (time(NULL));
 	perceptronsCount = 5;
 	perceptrons = new Perceptron*[perceptronsCount];
 	initPerceptrons(initVal);

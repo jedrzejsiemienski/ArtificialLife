@@ -240,7 +240,29 @@ int SDLInterface::moveJoint(SDLKey keyPressed) {
 
 
 
+int SDLInterface::displayWormStatic(Worm * worm){
+	SDL_Init( SDL_INIT_VIDEO );
+	screen = SDL_SetVideoMode( WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF );
+	SDL_WM_SetCaption( WINDOW_TITLE, 0 );
 
+	SDL_Event event;
+	bool gameRunning = true;
+
+	clrScr();
+	printMesh(100,100,screen);
+	worm->draw(screen);
+
+	while (gameRunning)	{
+		if (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				gameRunning = false;
+			}
+		}
+	}
+
+	SDL_Quit();
+    return 0;
+}
 
 
 int SDLInterface::displayWorm(Worm * worm, int movementSteps, Point * target, int interval) {

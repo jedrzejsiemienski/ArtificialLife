@@ -12,7 +12,6 @@ BrainRandom::BrainRandom() : BaseBrain(){}
 BrainRandom::~BrainRandom() {}
 
 int ** BrainRandom::stimulate(int b1, int b2, int a1, int a2, int a3){
-	srand (time(NULL));
 	int ** result = new int*[dataCount];
 	for(int i = 0; i < dataCount; i++){
 		result[i] = new int[2];

@@ -9,7 +9,6 @@
 
 
 BrainOnePerceptron::BrainOnePerceptron(int initVal) : BaseBrain() {
-	srand (time(NULL));
 	initPerceptron(initVal);
 }
 

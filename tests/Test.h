@@ -10,6 +10,7 @@
 
 #include "../interface/SDLInterface.h"
 #include "../worm/Worm.h"
+#include "../evolution/Environment.h"
 
 class Test {
 public:
@@ -27,6 +28,7 @@ private:
 	void testGenotypeOperations(int type = 2);
 	void testWormToAndFromGenotype(int type = 2);
 	void testMemoryLeaks();
+	void testMovingWorm();
 	void testEvolutionaryAlgorithm();
 };
 

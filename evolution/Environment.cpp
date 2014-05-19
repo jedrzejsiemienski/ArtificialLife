@@ -18,7 +18,7 @@ Environment::Environment(Point start, Point target, int type, int populationSize
 	this->f = f;
 	this->cr = cr;
 	startPopulationSize = populationSize;
-	createBasePopulation();
+	//createBasePopulation();
 }
 
 Environment::~Environment() {}
@@ -35,13 +35,23 @@ void Environment::print(){
 }
 
 float Environment::evolutionCycle(){
+	createBasePopulation();
 	createIntermediatePopulation();
-	eliminate();
-	return bestWorm->getCurrentDistanceToTarget();
+	clear();
+	//eliminate();
+	//return bestWorm->getCurrentDistanceToTarget();
+}
+
+float Environment::epochs(int n){
+	float d;
+	for(int i = 0; i < n; i++){
+		d = evolutionCycle();
+	}
+	return d;
 }
 
 void Environment::createBasePopulation(){
-	for(int i = 0; i < startPopulationSize; i++){
+	while(population.size() < startPopulationSize){
 		population.push_back(new Worm(type, start.x, start.y, target.x, target.y));
 	}
 	bestWorm = *population.begin();
@@ -59,28 +69,39 @@ int Environment::compare(Worm* w1, Worm* w2) {
 }
 
 //TOFIX
-Worm* Environment::randomWorm(){
-	return bestWorm;
+Worm* Environment::getWromFromPopulationAt(int index){
+	list<Worm*>::iterator worm = population.begin();
+	for(int i = 0; i < index; i++){
+		worm++;
+	}
+	return *worm;
 }
 
 
 void Environment::createIntermediatePopulation(){
-	Genotype* g1;
-	Genotype* g2;
-	Genotype* g3;
-	Genotype* current;
-	Genotype* result;
 	list<Worm*>::iterator currentWorm;
+	int index1, index2, index3;
 
 	for(currentWorm = population.begin(); currentWorm != population.end(); ++currentWorm){
-		g1 = randomWorm()->getBrain()->getGenotype();
-		g2 = randomWorm()->getBrain()->getGenotype();
-		while(g1 == g2) g2 = randomWorm()->getBrain()->getGenotype();
-		g3 = randomWorm()->getBrain()->getGenotype();
-		while(g1 == g3 || g2 == g3) g3 = randomWorm()->getBrain()->getGenotype();
+		Genotype* g1;
+		Genotype* g2;
+		Genotype* g3;
+		Genotype* mutated;
+		Genotype* current;
 
+		index1 = rand() % population.size();
+		index2 = rand() % population.size();
+		while(index1 == index2) index2 = rand() % population.size();
+		index3 = rand() % population.size();
+		while(index1 == index3 || index2 == index3) index3 = rand() % population.size();
+
+		cout << index1 << " " << index2 << " " << index3 << endl;
+
+		g1 = getWromFromPopulationAt(index1)->getBrain()->getGenotype();
+		g2 = getWromFromPopulationAt(index2)->getBrain()->getGenotype();
+		g3 = getWromFromPopulationAt(index3)->getBrain()->getGenotype();
+		mutated = g1->mutateWith(f, g2, g3);
 		current = (*currentWorm)->getBrain()->getGenotype();
-		result = current->crossWith(cr, g1->mutateWith(f, g2, g3));
 
 		intermediatePopulation.push_back(new Worm(
 			type,
@@ -88,18 +109,39 @@ void Environment::createIntermediatePopulation(){
 			(*currentWorm)->getInitPoint()->y,
 			(*currentWorm)->getEndPoint()->x,
 			(*currentWorm)->getEndPoint()->y,
-			result
+			current->crossWith(cr, mutated)
 		));
+
+		delete g1;
+		delete g2;
+		delete g3;
+		delete mutated;
+		delete current;
 	}
 
 }
 
+void Environment::clear(){
+	while(intermediatePopulation.size() != 0){
+		delete *intermediatePopulation.begin();
+		intermediatePopulation.pop_front();
+	}
+
+	while(population.size() != 0){
+		delete *population.begin();
+		population.pop_front();
+	}
+}
+
 void Environment::eliminate(){
-	list<Worm*>::iterator bp = population.begin();
-	list<Worm*>::iterator ip = intermediatePopulation.begin();
+	list<Worm*>::iterator bp;
+	list<Worm*>::iterator ip;
 
 	Worm* winner;
 	while(intermediatePopulation.size() != 0){
+		bp = population.begin();
+		ip = intermediatePopulation.begin();
+
 		Worm* loser;
 	    if(compare(*bp, *ip) == 1){
 	    	winner = *bp;

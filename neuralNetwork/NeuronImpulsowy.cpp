@@ -25,8 +25,6 @@ NeuronImpulsowy::NeuronImpulsowy(float givenTimeBase) {
 
 
 NeuronImpulsowy::NeuronImpulsowy(int givenG, float givenTimeBase, int initVal) {
-	srand(time(NULL));
-
 	eta = returnNumber(initVal, randomNumberFromRange(4.0, 100000.0));//0.01;   //wsplczynnik zamulenia  ---- TO
 	theta = returnNumber(initVal, randomNumberFromRange(20.0, 1000.0));//0.4; //prog wyjscia  ---- TO
 	g = givenG;  //ilosc neurownow wejsciowych = gamma.length, tzn ilosc wejsc - givenG!!!

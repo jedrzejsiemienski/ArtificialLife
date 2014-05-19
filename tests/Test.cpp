@@ -145,8 +145,31 @@ void Test::testMemoryLeaks(){
 	}
 }
 
-void Test::testEvolutionaryAlgorithm(){
+void Test::testMovingWorm(){
+	Point target(0, 0);
+	Worm * worm = new Worm(1, 400, 400, target.x, target.y, 0.4);
 
+	cout << worm->getCurrentDistanceToTarget() << endl;
+	cout << worm->getDistanceAfterNMoves(1000) << endl;
+	cout << worm->getCurrentDistanceToTarget() << endl;
+	cout << worm->getDistanceAfterNMoves(1000) << endl;
+
+	SDLInterface inteface;
+	//inteface.displayWorm(worm, 300, &target, 100);
+	inteface.displayWormStatic(worm);
+
+	//delete worm;
+}
+
+void Test::testEvolutionaryAlgorithm(){
+	Environment env(Point(400.0f, 400.0f), Point(0.0f, 0.0f), 1, 100, 0.7, 0.5, 100);
+	env.epochs(1000000);
+	Worm * worm = env.getBestWorm();
+
+	SDLInterface inteface;
+	inteface.displayWorm(worm, 500, new Point(400.0f, 400.0f), 50);
+
+	//delete worm;
 }
 
 void Test::performTests(){
@@ -158,5 +181,6 @@ void Test::performTests(){
 	//testGenotypeOperations(1);
 	//testWormToAndFromGenotype();
 	//testMemoryLeaks();
-	testEvolutionaryAlgorithm()
+	//testMovingWorm();
+	testEvolutionaryAlgorithm();
 }
