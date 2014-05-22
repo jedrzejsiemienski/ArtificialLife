@@ -38,6 +38,8 @@ public:
 	Point* getInitPoint(){return initPoint;};
 	Point* getEndPoint(){return endPoint;};
 
+	int movementSteps;
+
 protected:
 	int dataCount;
 	Point* initPoint;

@@ -26,22 +26,25 @@ void Test::testSkeleton() {
 
 void Test::testWorm() {
 	Point target(0, 0);
-	Worm * worm = new Worm(4, 400, 400, target.x, target.y);
+	Worm * worm = new Worm(4, 400, 400, target.x, target.y, 300);
 
 	SDLInterface inteface;
-	inteface.displayWorm(worm, 300, &target, 100);
+	inteface.displayWorm(worm);
 }
 
 void Test::testSavingToFile(){
-	Worm * worm = new Worm(2, 400, 400, 20, 20, 1);
-	worm->saveToFile("test3.txt");
+	Worm * worm = new Worm(2, 400, 400, 20, 20, 300);
+	worm->saveToFile("result.txt");
+
+	SDLInterface inteface;
+	inteface.displayWorm(worm);
 }
 
 void Test::testLoadingFromFile(){
 	Worm * worm = new Worm(2, "result.txt");
 
 	SDLInterface inteface;
-	inteface.displayWorm(worm, 300, worm->getEndPoint(), 50);
+	inteface.displayWorm(worm);
 }
 
 void Test::testGenotypeOperations(int type){
@@ -87,6 +90,13 @@ void Test::testGenotypeOperations(int type){
 	brainMutate->setGenotype(g3->mutateWith(0.5f, g1, g2));
 	wormMutate->saveToFile("mutateType2.txt");
 
+	//Genotype* mutateWith(float f, Genotype* x1, Genotype* x2);
+	Worm * wormMutate2 = new Worm(type, 400, 400, 20, 20);
+	BaseBrain * brainMutate2 = wormMutate2->getBrain();
+	Genotype* g4 = brainMutate2->getGenotype();
+	brainMutate->setGenotype(g4->mutateCurrentToBest(0.5f, g1, g2, g3));
+	wormMutate2->saveToFile("mutate2Type2.txt");
+
 	delete worm1;
 	delete worm2;
 	delete wormSub;
@@ -94,9 +104,11 @@ void Test::testGenotypeOperations(int type){
 	delete wormMult;
 	delete wormCross;
 	delete wormMutate;
+	delete wormMutate2;
 	delete g1;
 	delete g2;
 	delete g3;
+	delete g4;
 }
 
 void Test::testWormToAndFromGenotype(int type){
@@ -170,18 +182,18 @@ void Test::testEvolutionaryAlgorithm(){
 		start,	//start
 		end,	//target
 		type,	//typ
-		50,	//populacja startowa
+		50,		//populacja startowa
 		0.7,	//f
 		0.5,	//cr
-		100		//movement steps
+		300		//movement steps
 	);
 
-	env.epochs(10);
+	env.epochs(20);
 	Worm * worm = env.getBestWorm();
 	worm->saveToFile("result.txt");
 
 	SDLInterface inteface;
-	inteface.displayWorm(worm, 100, &end, 50);
+	inteface.displayWorm(worm);
 
 	env.clear();
 }

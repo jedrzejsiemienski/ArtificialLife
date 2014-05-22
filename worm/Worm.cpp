@@ -7,24 +7,27 @@
 
 #include "Worm.h"
 
-Worm::Worm(int type, int startX, int startY, int targetX, int targetY, int initVal) {
+Worm::Worm(int type, int startX, int startY, int targetX, int targetY, int givenMovementSteps, int initVal) {
 	initPoint = new Point(startX, startY);
 	endPoint = new Point(targetX, targetY);
 	skeleton = new Skeleton(startX, startY);
+	movementSteps = givenMovementSteps;
 	setBrainByType(type, initVal);
 }
 
 Worm::Worm(int type, string name) {
 	initPoint = new Point(0, 0);
 	endPoint = new Point(0, 0);
+	movementSteps = 0;
 	setBrainByType(type);
 	loadFromFile(name);
 }
 
-Worm::Worm(int type, int startX, int startY, int targetX, int targetY, Genotype* source){
+Worm::Worm(int type, int startX, int startY, int targetX, int targetY, Genotype* source, int givenMovementSteps){
 	initPoint = new Point(startX, startY);
 	endPoint = new Point(targetX, targetY);
 	skeleton = new Skeleton(startX, startY);
+	movementSteps = givenMovementSteps;
 	setBrainByType(type);
 	brain->setGenotype(source);
 }
@@ -61,6 +64,7 @@ void Worm::setBrain(BaseBrain* givenBrain){
 	brain = givenBrain;
 	brain->setInitPoint(initPoint->x, initPoint->y);
 	brain->setEndPoint(endPoint->x, endPoint->y);
+	brain->movementSteps = movementSteps;
 }
 
 BaseBrain* Worm::getBrain(){
@@ -159,6 +163,10 @@ float Worm::getDistanceAfterNMoves(int n){
 	return result;
 }
 
+float Worm::getMovementSteps(){
+	return movementSteps;
+}
+
 void Worm::saveToFile(string name){
 	brain->saveToFile(name);
 }
@@ -169,6 +177,7 @@ void Worm::loadFromFile(string name){
 	initPoint->y = brain->getInitPoint()->y;
 	endPoint->x = brain->getEndPoint()->x;
 	endPoint->y = brain->getEndPoint()->y;
+	movementSteps = brain->movementSteps;
 	skeleton = new Skeleton(initPoint->x, initPoint->y);
 }
 

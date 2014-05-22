@@ -23,9 +23,9 @@ using namespace std;
 
 class Worm {
 public:
-	Worm(int, int, int, int, int, int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
+	Worm(int, int, int, int, int, int givenMovementSteps = 300, int initVal = NeuronImpulsowy::USE_RANDOM_VALUE);
 	Worm(int, string); //load from file
-	Worm(int, int, int, int, int, Genotype*); //create from genotype
+	Worm(int, int, int, int, int, Genotype*, int givenMovementSteps = 300); //create from genotype
 	virtual ~Worm();
 	void move();
 	void reset();
@@ -37,6 +37,7 @@ public:
 
 	float getCurrentDistanceToTarget();
 	float getDistanceAfterNMoves(int);
+	float getMovementSteps();
 
 	void setBrain(BaseBrain*);
 	BaseBrain* getBrain();
@@ -51,6 +52,7 @@ private:
 	Point * endPoint;
 	BaseBrain* brain;
 	Skeleton* skeleton;
+	float movementSteps;
 };
 
 #endif /* WORM_H_ */

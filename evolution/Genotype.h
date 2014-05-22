@@ -21,6 +21,7 @@ public:
 
 	Genotype* crossWith(float, Genotype*); //pobiera mutanta v, mutuje go ze soba i zwraca u - osobnika probnego
 	Genotype* mutateWith(float, Genotype*, Genotype*); //mutates current with 2 given
+	Genotype* mutateCurrentToBest(float, Genotype*, Genotype*, Genotype*); //mutates current with 3 given
 
 	Genotype* substract(Genotype*);  //substract given genotype from current genotype
 	Genotype* add(Genotype*);  //add given genotype to current genotype

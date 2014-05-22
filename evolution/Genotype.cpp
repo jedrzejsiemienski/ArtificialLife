@@ -134,6 +134,25 @@ Genotype* Genotype::mutateWith(float f, Genotype* x1, Genotype* x2){
 	return result;
 }
 
+//mutates current with 3 given
+Genotype* Genotype::mutateCurrentToBest(float f, Genotype* xBest, Genotype* x1, Genotype* x2){
+	Genotype *substract1 = xBest->substract(this);
+	Genotype *mutlipiled1 = substract1->multiply(f);
+
+	Genotype *substract2 = x1->substract(x2);
+	Genotype *mutlipiled2 = substract2->multiply(f);
+
+	Genotype *partial = mutlipiled2->add(mutlipiled1);
+
+	Genotype *result = this->add(partial);
+	delete substract1;
+	delete mutlipiled1;
+	delete substract2;
+	delete mutlipiled2;
+	delete partial;
+	return result;
+}
+
 bool assertEqualStructure(Genotype* g){
 	return true;
 }

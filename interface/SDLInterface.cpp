@@ -15,6 +15,7 @@ SDLInterface::SDLInterface() {
 
 SDLInterface::~SDLInterface() {}
 
+
 int SDLInterface::manuallySkeleton() {
 
 	skeleton = new Skeleton(400, 400);
@@ -265,17 +266,15 @@ int SDLInterface::displayWormStatic(Worm * worm){
 }
 
 
-int SDLInterface::displayWorm(Worm * worm, int movementSteps, Point * target, int interval) {
-	//worm = new Worm(WINDOW_WIDTH/2 - 50, WINDOW_HEIGHT/2 - 20);
-	//worm = new Worm(50, 50);
-	this->worm = worm;
+int SDLInterface::displayWorm(Worm * givenWorm, int interval) {
+	worm = givenWorm;
 	int currentStep = 0;
-	this->target = target;
+	target = worm->getEndPoint();
+	int movementSteps = worm->getMovementSteps();
 
 	start = true;
 
 	SDL_Init( SDL_INIT_VIDEO );
-
 	screen = SDL_SetVideoMode( WINDOW_WIDTH, WINDOW_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF );
 	SDL_WM_SetCaption( WINDOW_TITLE, 0 );
 

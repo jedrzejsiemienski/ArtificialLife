@@ -30,7 +30,7 @@ class SDLInterface {
 		int manuallySkeleton();
 		int manuallyJoints();
 		int displayWormStatic(Worm *);
-		int displayWorm(Worm * worm, int, Point*, int interval = 100);
+		int displayWorm(Worm * worm, int interval = 50);
 		void drawLine(int x1, int y1, int x2, int y2, int r, int g, int b);
 		void clrScr();
 

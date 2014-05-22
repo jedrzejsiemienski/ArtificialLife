@@ -94,6 +94,7 @@ void BrainManyPerceptrons::saveToFile(string name){
 	file.open(name.c_str());
 
 	file << "2" << endl ;
+	file << movementSteps << endl;
 	file << getInitPoint()->x << " " << getInitPoint()->y << endl;
 	file << getEndPoint()->x << " " << getEndPoint()->y << endl;
 
@@ -126,6 +127,12 @@ void BrainManyPerceptrons::loadFromFile(string name){
 	getline(file, line);
 	if(line[0] != '2')
 		return;
+
+	getline(file, line);
+	istringstream issMS(line);
+	vector<string> tokens;
+	copy(istream_iterator<string>(issMS), istream_iterator<string>(), back_inserter<vector<string> >(tokens));
+	movementSteps = (int)::atof(tokens[0].c_str());
 
 	//to to jest punkt startowy
 	getline(file, line);

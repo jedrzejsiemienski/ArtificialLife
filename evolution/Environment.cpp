@@ -52,7 +52,7 @@ void Environment::epochs(int n){
 
 void Environment::createBasePopulation(){
 	while(population.size() < startPopulationSize){
-		population.push_back(new Worm(type, start.x, start.y, target.x, target.y));
+		population.push_back(new Worm(type, start.x, start.y, target.x, target.y, movementSteps));
 	}
 	bestWorm = *population.begin();
 }
@@ -86,6 +86,7 @@ void Environment::createIntermediatePopulation(){
 		Genotype* g1;
 		Genotype* g2;
 		Genotype* g3;
+		Genotype* gBest;
 		Genotype* mutated;
 		Genotype* current;
 
@@ -98,7 +99,9 @@ void Environment::createIntermediatePopulation(){
 		g1 = getWromFromPopulationAt(index1)->getBrain()->getGenotype();
 		g2 = getWromFromPopulationAt(index2)->getBrain()->getGenotype();
 		g3 = getWromFromPopulationAt(index3)->getBrain()->getGenotype();
+		gBest = bestWorm->getBrain()->getGenotype();
 		mutated = g1->mutateWith(f, g2, g3);
+		//mutated = g1->mutateCurrentToBest(f, gBest, g2, g3);
 		current = (*currentWorm)->getBrain()->getGenotype();
 
 		intermediatePopulation.push_back(new Worm(
@@ -107,12 +110,14 @@ void Environment::createIntermediatePopulation(){
 			(*currentWorm)->getInitPoint()->y,
 			(*currentWorm)->getEndPoint()->x,
 			(*currentWorm)->getEndPoint()->y,
-			current->crossWith(cr, mutated)
+			current->crossWith(cr, mutated),
+			movementSteps
 		));
 
 		delete g1;
 		delete g2;
 		delete g3;
+		delete gBest;
 		delete mutated;
 		delete current;
 	}
