@@ -11,6 +11,7 @@
 #include "../interface/SDLInterface.h"
 #include "../worm/Worm.h"
 #include "../evolution/Environment.h"
+#include "../evolution/ResearchEngine.h"
 
 class Test {
 public:
@@ -30,6 +31,8 @@ private:
 	void testMemoryLeaks();
 	void testMovingWorm();
 	void testEvolutionaryAlgorithm();
+	void testResearch();
 };
 
 #endif /* TEST_H_ */
+

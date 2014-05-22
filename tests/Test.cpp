@@ -38,7 +38,7 @@ void Test::testSavingToFile(){
 }
 
 void Test::testLoadingFromFile(){
-	Worm * worm = new Worm(2, "test3.txt");
+	Worm * worm = new Worm(2, "result.txt");
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm, 300, worm->getEndPoint(), 50);
@@ -176,13 +176,19 @@ void Test::testEvolutionaryAlgorithm(){
 		100		//movement steps
 	);
 
-	Worm * worm = env.epochs(10);
+	env.epochs(10);
+	Worm * worm = env.getBestWorm();
 	worm->saveToFile("result.txt");
 
 	SDLInterface inteface;
 	inteface.displayWorm(worm, 100, &end, 50);
 
 	env.clear();
+}
+
+void Test::testResearch(){
+	ResearchEngine engine;
+	engine.doPlannedResearches();
 }
 
 void Test::performTests(){
@@ -195,5 +201,6 @@ void Test::performTests(){
 	//testWormToAndFromGenotype();
 	//testMemoryLeaks();
 	//testMovingWorm();
-	testEvolutionaryAlgorithm();
+	//testEvolutionaryAlgorithm();
+	testResearch();
 }

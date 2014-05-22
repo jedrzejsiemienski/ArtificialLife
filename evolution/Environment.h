@@ -20,8 +20,10 @@ public:
 	Environment(Point, Point, int, int, float, float, int);
 	virtual ~Environment();
 
+	void epochs(int);
 	Worm * getBestWorm();
-	Worm * epochs(int);
+	vector<float> getResults();
+
 	float evolutionCycle();
 	void clear();
 	void print();
@@ -34,6 +36,7 @@ private:
 	int type;
 	float f;
 	float cr;
+	vector<float> results;
 
 	Point start;
 	Point target;

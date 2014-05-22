@@ -27,6 +27,10 @@ Worm * Environment::getBestWorm() {
 	return bestWorm;
 }
 
+vector<float> Environment::getResults(){
+	return results;
+}
+
 void Environment::print(){
 	list<Worm*>::iterator currentWorm;
 	for(currentWorm = population.begin(); currentWorm != population.end(); ++currentWorm){
@@ -40,11 +44,10 @@ float Environment::evolutionCycle(){
 	return bestWorm->getDistanceAfterNMoves(movementSteps);
 }
 
-Worm * Environment::epochs(int n){
+void Environment::epochs(int n){
 	for(int i = 0; i < n; i++){
-		cout << evolutionCycle() << endl;
+		results.push_back(evolutionCycle());
 	}
-	return bestWorm;
 }
 
 void Environment::createBasePopulation(){
@@ -126,6 +129,8 @@ void Environment::clear(){
 		delete *population.begin();
 		population.pop_front();
 	}
+
+	results.clear();
 }
 
 void Environment::eliminate(){
