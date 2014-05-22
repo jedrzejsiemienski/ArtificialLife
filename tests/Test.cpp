@@ -200,7 +200,7 @@ void Test::testEvolutionaryAlgorithm(){
 
 void Test::testResearch(){
 	ResearchEngine engine;
-	engine.doPlannedResearches();
+	engine.doPlannedResearches(false);
 }
 
 void Test::performTests(){

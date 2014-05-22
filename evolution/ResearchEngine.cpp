@@ -10,12 +10,16 @@
 ResearchEngine::ResearchEngine() {
 	start = new Point(100, 100);
 	end = new Point(900, 600);
-	type = 2;
 	startPopulationSize = 50;
-	f = 0.8f;  //0.4f, 0.5f, 0.7f, 0.09f
-	cr = 0.5f; //0.1f, 0.5f, 0.9f
+	f.push_back(0.4f);
+	f.push_back(0.5f);
+	f.push_back(0.7f);
+	f.push_back(0.9f);
+	cr.push_back(0.1f);
+	cr.push_back(0.5f);
+	cr.push_back(0.9f);
 	movementSteps = 300;
-	epochs = 5;
+	epochs = 2;
 
 	screenWidth = 1000;
 	screenHeight = 100;
@@ -27,15 +31,30 @@ ResearchEngine::~ResearchEngine() {
 }
 
 void ResearchEngine::doPlannedResearches(bool showResults){
-	doSingleResearch(start, end, 1, startPopulationSize, f, cr, movementSteps, true);
+	vector<float>::iterator F;
+	vector<float>::iterator CR;
+
+	type = 1;
+	for(F = f.begin(); F != f.end(); ++F){
+		for(CR = cr.begin(); CR != cr.end(); ++CR){
+			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
+		}
+	}
+
+	type = 2;
+	for(F = f.begin(); F != f.end(); ++F){
+		for(CR = cr.begin(); CR != cr.end(); ++CR){
+			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
+		}
+	}
 }
 
 void ResearchEngine::doSingleResearch(Point *start, Point *end, int type, int populationSize, float f, float cr, int movementSteps, bool showResult){
 	Environment env(*start, *end, type, startPopulationSize, f, cr, movementSteps);
 	env.epochs(epochs);
 	Worm * worm = env.getBestWorm();
-	worm->saveToFile(createFileName("", "_worm.txt"));
-	saveResultsToFile(createFileName("", "_results.txt"), env.getResults());
+	worm->saveToFile(createFileName("", "_worm.txt", f, cr));
+	saveResultsToFile(createFileName("", "_results.txt", f, cr), env.getResults());
 
 	if(showResult){
 		SDLInterface inteface;
@@ -69,7 +88,7 @@ void ResearchEngine::saveResultsToFile(string name, vector<float> results){
 	file.close();
 }
 
-string ResearchEngine::createFileName(string prefix, string postfix){
+string ResearchEngine::createFileName(string prefix, string postfix, float f, float cr){
 	string results = "";
 	results += prefix;
 

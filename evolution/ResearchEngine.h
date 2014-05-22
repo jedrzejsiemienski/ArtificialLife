@@ -31,14 +31,14 @@ private:
 
 	void saveResultsToFile(string, vector<float>);
 
-	string createFileName(string, string);
+	string createFileName(string, string, float, float);
 
 	Point * start;
 	Point * end;
 	int type;
 	int startPopulationSize;
-	float f;
-	float cr;
+	vector<float> f;
+	vector<float> cr;
 	int movementSteps;
 	int epochs;
 
