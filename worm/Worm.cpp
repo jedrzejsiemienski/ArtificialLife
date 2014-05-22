@@ -121,7 +121,10 @@ void Worm::move(){
 		}
 	}
 
-	delete result;
+	for(int j = 0; j < 5; j++){
+		delete result[j];
+	}
+	delete[] result;
 }
 
 void Worm::draw(SDL_Surface* screen){

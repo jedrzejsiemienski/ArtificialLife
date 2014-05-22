@@ -18,7 +18,7 @@ Environment::Environment(Point start, Point target, int type, int populationSize
 	this->f = f;
 	this->cr = cr;
 	startPopulationSize = populationSize;
-	//createBasePopulation();
+	createBasePopulation();
 }
 
 Environment::~Environment() {}
@@ -35,19 +35,16 @@ void Environment::print(){
 }
 
 float Environment::evolutionCycle(){
-	createBasePopulation();
 	createIntermediatePopulation();
-	clear();
-	//eliminate();
-	//return bestWorm->getCurrentDistanceToTarget();
+	eliminate();
+	return bestWorm->getDistanceAfterNMoves(movementSteps);
 }
 
-float Environment::epochs(int n){
-	float d;
+Worm * Environment::epochs(int n){
 	for(int i = 0; i < n; i++){
-		d = evolutionCycle();
+		cout << evolutionCycle() << endl;
 	}
-	return d;
+	return bestWorm;
 }
 
 void Environment::createBasePopulation(){
@@ -95,8 +92,6 @@ void Environment::createIntermediatePopulation(){
 		index3 = rand() % population.size();
 		while(index1 == index3 || index2 == index3) index3 = rand() % population.size();
 
-		cout << index1 << " " << index2 << " " << index3 << endl;
-
 		g1 = getWromFromPopulationAt(index1)->getBrain()->getGenotype();
 		g2 = getWromFromPopulationAt(index2)->getBrain()->getGenotype();
 		g3 = getWromFromPopulationAt(index3)->getBrain()->getGenotype();
@@ -139,10 +134,10 @@ void Environment::eliminate(){
 
 	Worm* winner;
 	while(intermediatePopulation.size() != 0){
+		Worm* loser;
 		bp = population.begin();
 		ip = intermediatePopulation.begin();
 
-		Worm* loser;
 	    if(compare(*bp, *ip) == 1){
 	    	winner = *bp;
 	    	loser = *ip;
@@ -156,11 +151,10 @@ void Environment::eliminate(){
 	    population.pop_front();
     	intermediatePopulation.pop_front();
 
-	    if(bestWorm != winner && compare(winner, bestWorm) == 1){
-	    	bestWorm = winner;
-	    }
-
-	    delete loser;
+    	if(bestWorm == loser || (bestWorm != winner && compare(winner, bestWorm) == 1)){
+    		bestWorm = winner;
+    	}
+    	delete loser;
 	}
 }
 

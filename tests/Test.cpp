@@ -129,11 +129,12 @@ void Test::testMemoryLeaks(){
 		//worm
 		Worm * worm1 = new Worm(1, 400, 400, 20, 20);
 		Genotype * g1 = worm1->getBrain()->getGenotype();
-		delete g1;
-		delete worm1;
 
 		Worm * worm2 = new Worm(2, 400, 400, 20, 20);
 		Genotype * g2 = worm2->getBrain()->getGenotype();
+
+		delete g1;
+		delete worm1;
 		delete g2;
 		delete worm2;
 
@@ -162,14 +163,26 @@ void Test::testMovingWorm(){
 }
 
 void Test::testEvolutionaryAlgorithm(){
-	Environment env(Point(400.0f, 400.0f), Point(0.0f, 0.0f), 1, 100, 0.7, 0.5, 100);
-	env.epochs(1000000);
-	Worm * worm = env.getBestWorm();
+	int type = 2;
+	Point start(100.0f, 300.0f);
+	Point end(800.0f, 500.0f);
+	Environment env(
+		start,	//start
+		end,	//target
+		type,	//typ
+		50,	//populacja startowa
+		0.7,	//f
+		0.5,	//cr
+		100		//movement steps
+	);
+
+	Worm * worm = env.epochs(10);
+	worm->saveToFile("result.txt");
 
 	SDLInterface inteface;
-	inteface.displayWorm(worm, 500, new Point(400.0f, 400.0f), 50);
+	inteface.displayWorm(worm, 100, &end, 50);
 
-	//delete worm;
+	env.clear();
 }
 
 void Test::performTests(){

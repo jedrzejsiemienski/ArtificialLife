@@ -21,17 +21,16 @@ public:
 	virtual ~Environment();
 
 	Worm * getBestWorm();
-
-	float epochs(int);
+	Worm * epochs(int);
 	float evolutionCycle();
-
 	void clear();
-
 	void print();
+
+	int compare(Worm*, Worm*);
 
 private:
 	int movementSteps;
-	int startPopulationSize;
+	unsigned int startPopulationSize;
 	int type;
 	float f;
 	float cr;
@@ -47,7 +46,7 @@ private:
 	void eliminate();
 
 	Worm* getWromFromPopulationAt(int);
-	int compare(Worm*, Worm*);
+
 };
 
 #endif /* ENVIRONMENT_H_ */

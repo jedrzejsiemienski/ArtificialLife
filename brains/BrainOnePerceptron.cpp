@@ -35,6 +35,7 @@ int ** BrainOnePerceptron::stimulate(int b1, int b2, int a1, int a2, int a3){
 		result[i][0] = rawResult[j++];
 		result[i][1] = rawResult[j++];
 	}
+	delete rawResult;
 	return result;
 }
 
