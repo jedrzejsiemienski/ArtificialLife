@@ -8,9 +8,12 @@
 #include "ResearchEngine.h"
 
 ResearchEngine::ResearchEngine() {
+
 	start = new Point(100, 100);
 	end = new Point(900, 600);
+
 	startPopulationSize = 50;
+
 	f.push_back(0.4f);
 	f.push_back(0.5f);
 	f.push_back(0.7f);
@@ -18,7 +21,9 @@ ResearchEngine::ResearchEngine() {
 	cr.push_back(0.1f);
 	cr.push_back(0.5f);
 	cr.push_back(0.9f);
+
 	movementSteps = 300;
+
 	epochs = 2;
 
 	screenWidth = 1000;
@@ -30,14 +35,28 @@ ResearchEngine::~ResearchEngine() {
 	delete end;
 }
 
+bool ResearchEngine::running;
+int ResearchEngine::epochNumber;
+int ResearchEngine::researchNumber;
+int ResearchEngine::researchesCount;
+SDL_Surface* ResearchEngine::screen;
+int ResearchEngine::screenWidth;
+int ResearchEngine::screenHeight;
+
 void ResearchEngine::doPlannedResearches(bool showResults){
 	vector<float>::iterator F;
 	vector<float>::iterator CR;
 
+	running = false;
+	SDL_Thread *thread = SDL_CreateThread( _progressThread, NULL );
+
 	type = 1;
+	researchNumber = 0;
+	researchesCount = f.size() * cr.size() * 2;
 	for(F = f.begin(); F != f.end(); ++F){
 		for(CR = cr.begin(); CR != cr.end(); ++CR){
 			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
+			researchNumber++;
 		}
 	}
 
@@ -45,9 +64,27 @@ void ResearchEngine::doPlannedResearches(bool showResults){
 	for(F = f.begin(); F != f.end(); ++F){
 		for(CR = cr.begin(); CR != cr.end(); ++CR){
 			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
+			researchNumber++;
 		}
 	}
+	running = true;
 }
+
+int _progressThread( void *data )
+{
+	ResearchEngine::initScreen();
+	int currentNumber = 0;
+    while( ResearchEngine::running == false )
+    {
+    	if(currentNumber != ResearchEngine::researchNumber){
+    		currentNumber = ResearchEngine::researchNumber;
+    		ResearchEngine::showProgressBar((float)currentNumber / (float)ResearchEngine::researchesCount, 1);
+    	}
+    }
+    return 0;
+}
+
+
 
 void ResearchEngine::doSingleResearch(Point *start, Point *end, int type, int populationSize, float f, float cr, int movementSteps, bool showResult){
 	Environment env(*start, *end, type, startPopulationSize, f, cr, movementSteps);

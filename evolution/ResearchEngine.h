@@ -26,6 +26,18 @@ public:
 	virtual ~ResearchEngine();
 	void doPlannedResearches(bool showResults = true);
 
+	static bool running;
+	static int epochNumber;
+	static int researchNumber;
+	static int researchesCount;
+	static SDL_Surface* screen;
+	static int screenWidth;
+	static int screenHeight;
+	static void initScreen();
+	static void showProgressBar(float, float);
+	static void killScreen();
+
+
 private:
 	void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
 
@@ -41,14 +53,9 @@ private:
 	vector<float> cr;
 	int movementSteps;
 	int epochs;
-
-	SDL_Surface* screen;
-	int screenWidth;
-	int screenHeight;
-	void initScreen();
-	void showProgressBar(float, float);
-	void killScreen();
 };
+
+int _progressThread( void *data );
 
 #endif /* RESEARCH_ENGINE_H_ */
 
