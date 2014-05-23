@@ -46,6 +46,7 @@ float Environment::evolutionCycle(){
 
 void Environment::epochs(int n){
 	for(int i = 0; i < n; i++){
+		ResearchEngine::epochNumber = i;
 		results.push_back(evolutionCycle());
 	}
 }

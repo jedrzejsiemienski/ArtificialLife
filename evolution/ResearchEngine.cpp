@@ -24,7 +24,7 @@ ResearchEngine::ResearchEngine() {
 
 	movementSteps = 300;
 
-	epochs = 2;
+	epochs = 10;
 
 	screenWidth = 1000;
 	screenHeight = 100;
@@ -43,35 +43,109 @@ SDL_Surface* ResearchEngine::screen;
 int ResearchEngine::screenWidth;
 int ResearchEngine::screenHeight;
 
+Point * ResearchEngine::start;
+Point * ResearchEngine::end;
+int ResearchEngine::type;
+int ResearchEngine::startPopulationSize;
+vector<float> ResearchEngine::f;
+vector<float> ResearchEngine::cr;
+int ResearchEngine::movementSteps;
+int ResearchEngine::epochs;
+
 void ResearchEngine::doPlannedResearches(bool showResults){
+	SDL_Thread *researchThread = SDL_CreateThread( _researchThread, NULL );
+	SDL_Thread *progressThread = SDL_CreateThread( _progressThread, NULL );
+
+	//SDL_WaitThread(researchThread, NULL);
+	SDL_WaitThread(progressThread, NULL);
+}
+
+int _researchThread(void *data){
 	vector<float>::iterator F;
 	vector<float>::iterator CR;
-
-	running = false;
-	SDL_Thread *thread = SDL_CreateThread( _progressThread, NULL );
-
-	type = 1;
-	researchNumber = 0;
-	researchesCount = f.size() * cr.size() * 2;
-	for(F = f.begin(); F != f.end(); ++F){
-		for(CR = cr.begin(); CR != cr.end(); ++CR){
-			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
-			researchNumber++;
+	ResearchEngine::running = true;
+	ResearchEngine::type = 1;
+	ResearchEngine::researchNumber = 0;
+	ResearchEngine::researchesCount = ResearchEngine::f.size() * ResearchEngine::cr.size() * 2;
+	ResearchEngine::epochNumber = 0;
+	for(F = ResearchEngine::f.begin(); F != ResearchEngine::f.end(); ++F){
+		for(CR = ResearchEngine::cr.begin(); CR != ResearchEngine::cr.end(); ++CR){
+			ResearchEngine::doSingleResearch(
+				ResearchEngine::start,
+				ResearchEngine::end,
+				ResearchEngine::type,
+				ResearchEngine::startPopulationSize,
+				*F, *CR,
+				ResearchEngine::movementSteps,
+				false
+			);
+			ResearchEngine::researchNumber++;
 		}
 	}
 
-	type = 2;
-	for(F = f.begin(); F != f.end(); ++F){
-		for(CR = cr.begin(); CR != cr.end(); ++CR){
-			doSingleResearch(start, end, type, startPopulationSize, *F, *CR, movementSteps, showResults);
-			researchNumber++;
+	ResearchEngine::type = 2;
+	for(F = ResearchEngine::f.begin(); F != ResearchEngine::f.end(); ++F){
+		for(CR = ResearchEngine::cr.begin(); CR != ResearchEngine::cr.end(); ++CR){
+			ResearchEngine::doSingleResearch(
+				ResearchEngine::start,
+				ResearchEngine::end,
+				ResearchEngine::type,
+				ResearchEngine::startPopulationSize,
+				*F, *CR,
+				ResearchEngine::movementSteps,
+				false
+			);
+			ResearchEngine::researchNumber++;
 		}
 	}
-	running = true;
+	ResearchEngine::running = false;
 }
 
 int _progressThread( void *data )
 {
+	int screenWidth = 1000;
+	int screenHeight = 100;
+	int r = ResearchEngine::researchNumber;
+	int e = ResearchEngine::epochNumber;
+
+	SDL_Init( SDL_INIT_VIDEO );
+	SDL_Surface* screen = SDL_SetVideoMode( screenWidth, screenHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF );
+	SDL_WM_SetCaption( "Reasearch progress", 0 );
+	SDL_Event event;
+
+	bool quit = false;
+    while( ResearchEngine::running && !quit)
+    {
+    	if(r != ResearchEngine::researchNumber || e != ResearchEngine::epochNumber){
+    		r = ResearchEngine::researchNumber;
+    		e = ResearchEngine::epochNumber;
+
+    		int barHeight = 30;
+    		int offset1 = 5;
+    		int offset2 = 50;
+    		int start = 5;
+    		float barWidth = (float)screenWidth - 5.0f;
+    		float progressA = barWidth * ((float)r / (float)ResearchEngine::researchesCount);
+    		float progressB = barWidth * ((float)e / (float)ResearchEngine::epochs);
+
+    		boxRGBA(screen, 0, 0, screenWidth, screenHeight, 255, 255, 255, 255);
+    		rectangleRGBA(screen, start, offset1, barWidth, barHeight + offset1, 0, 0, 255, 255);
+    		boxRGBA(screen, start, offset1, progressA + start, barHeight + offset1, 0, 0, 255, 255);
+    		rectangleRGBA(screen, start, offset2, barWidth, barHeight + offset2, 0, 0, 255, 255);
+    		boxRGBA(screen, start, offset2, progressB + start, barHeight + offset2, 0, 0, 255, 255);
+    		SDL_Flip(screen);
+    	}
+
+		if (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				quit = true;
+			}
+		}
+    }
+
+    SDL_Quit();
+
+	/*
 	ResearchEngine::initScreen();
 	int currentNumber = 0;
     while( ResearchEngine::running == false )
@@ -81,6 +155,7 @@ int _progressThread( void *data )
     		ResearchEngine::showProgressBar((float)currentNumber / (float)ResearchEngine::researchesCount, 1);
     	}
     }
+    */
     return 0;
 }
 

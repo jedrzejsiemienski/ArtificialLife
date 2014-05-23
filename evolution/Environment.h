@@ -9,6 +9,7 @@
 #define ENVIRONMENT_H_
 
 #include "Genotype.h"
+#include "ResearchEngine.h"
 #include "../worm/Worm.h"
 #include "../utils/Point.h"
 #include <math.h>

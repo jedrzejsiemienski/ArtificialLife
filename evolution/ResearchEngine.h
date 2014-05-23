@@ -37,25 +37,24 @@ public:
 	static void showProgressBar(float, float);
 	static void killScreen();
 
+	static Point * start;
+	static Point * end;
+	static int type;
+	static int startPopulationSize;
+	static vector<float> f;
+	static vector<float> cr;
+	static int movementSteps;
+	static int epochs;
 
-private:
-	void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
+	static void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
+	static void saveResultsToFile(string, vector<float>);
+	static string createFileName(string, string, float, float);
 
-	void saveResultsToFile(string, vector<float>);
-
-	string createFileName(string, string, float, float);
-
-	Point * start;
-	Point * end;
-	int type;
-	int startPopulationSize;
-	vector<float> f;
-	vector<float> cr;
-	int movementSteps;
-	int epochs;
 };
 
-int _progressThread( void *data );
+int _researchThread(void *data);
+int _progressThread(void *data);
 
 #endif /* RESEARCH_ENGINE_H_ */
+
 
