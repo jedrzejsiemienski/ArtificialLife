@@ -46,7 +46,6 @@ float Environment::evolutionCycle(){
 
 void Environment::epochs(int n){
 	for(int i = 0; i < n; i++){
-		ResearchEngine::epochNumber = i;
 		results.push_back(evolutionCycle());
 	}
 }
@@ -101,8 +100,8 @@ void Environment::createIntermediatePopulation(){
 		g2 = getWromFromPopulationAt(index2)->getBrain()->getGenotype();
 		g3 = getWromFromPopulationAt(index3)->getBrain()->getGenotype();
 		gBest = bestWorm->getBrain()->getGenotype();
-		mutated = g1->mutateWith(f, g2, g3);
-		//mutated = g1->mutateCurrentToBest(f, gBest, g2, g3);
+		//mutated = g1->mutateWith(f, g2, g3);
+		mutated = g1->mutateCurrentToBest(f, gBest, g2, g3);
 		current = (*currentWorm)->getBrain()->getGenotype();
 
 		intermediatePopulation.push_back(new Worm(

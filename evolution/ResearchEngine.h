@@ -25,31 +25,32 @@ public:
 	ResearchEngine();
 	virtual ~ResearchEngine();
 	void doPlannedResearches(bool showResults = true);
+	void _doPlannedResearches(bool showResults);
 
-	static bool running;
-	static int epochNumber;
-	static int researchNumber;
-	static int researchesCount;
-	static SDL_Surface* screen;
-	static int screenWidth;
-	static int screenHeight;
-	static void initScreen();
-	static void showProgressBar(float, float);
-	static void killScreen();
+	bool isRunning();
+	int getCurrentEpoch();
+	int getEpochs();
+	int getCurrentResearch();
+	int getResearches();
 
-	static Point * start;
-	static Point * end;
-	static int type;
-	static int startPopulationSize;
-	static vector<float> f;
-	static vector<float> cr;
-	static int movementSteps;
-	static int epochs;
+private:
+	Point * start;
+	Point * end;
+	int type;
+	int startPopulationSize;
+	vector<float> f;
+	vector<float> cr;
+	int movementSteps;
 
-	static void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
-	static void saveResultsToFile(string, vector<float>);
-	static string createFileName(string, string, float, float);
+	bool running;
+	int currentEpoch;
+	int epochs;
+	int currentResearch;
+	int researches;
 
+	void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
+	void saveResultsToFile(string, vector<float>);
+	string createFileName(string, string, float, float);
 };
 
 int _researchThread(void *data);
