@@ -20,6 +20,11 @@
 
 using namespace std;
 
+struct Route {
+	Point* start;
+	Point* end;
+};
+
 class ResearchEngine {
 public:
 	ResearchEngine();
@@ -34,23 +39,23 @@ public:
 	int getResearches();
 
 private:
-	Point * start;
-	Point * end;
-	int type;
-	int startPopulationSize;
+	vector<int> epochsVector;
+	vector<int> types;
+	vector<Route*> routes;
+	vector<int> startPopulationSizes;
 	vector<float> f;
 	vector<float> cr;
 	int movementSteps;
 
 	bool running;
 	int currentEpoch;
-	int epochs;
 	int currentResearch;
-	int researches;
+	int epochsTotal;
+	int researchesTotal;
 
-	void doSingleResearch(Point*, Point*, int, int, float, float, int, bool showResult = false);
+	void doSingleResearch(Point*, Point*, int, int, float, float, int, int, bool showResult = false);
 	void saveResultsToFile(string, vector<float>);
-	string createFileName(string, string, float, float);
+	string createFileName(string, string, Point*, Point*, int, int, float, float, int, int);
 };
 
 int _researchThread(void *data);

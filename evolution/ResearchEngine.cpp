@@ -8,37 +8,52 @@
 #include "ResearchEngine.h"
 
 ResearchEngine::ResearchEngine() {
-	start = new Point(100, 100);
-	end = new Point(900, 600);
+	epochsVector.push_back(10);
 
-	startPopulationSize = 20;
+	types.push_back(1);
+	types.push_back(2);
+
+	Route * route;
+	route = new Route();
+	route->start = new Point(100, 100);
+	route->end = new Point(900, 600);
+	routes.push_back(route);
+
+	route = new Route();
+	route->start = new Point(900, 600);
+	route->end = new Point(100, 100);
+	routes.push_back(route);
+
+	route = new Route();
+	route->start = new Point(100, 600);
+	route->end = new Point(900, 600);
+	routes.push_back(route);
+
+	startPopulationSizes.push_back(20);
 
 	f.push_back(0.4f);
-	f.push_back(0.5f);
-	f.push_back(0.6f);
-	f.push_back(0.7f);
-	f.push_back(0.8f);
-	f.push_back(0.9f);
+//	f.push_back(0.5f);
+//	f.push_back(0.6f);
+//	f.push_back(0.7f);
+//	f.push_back(0.8f);
+//	f.push_back(0.9f);
 
 	cr.push_back(0.1f);
-	cr.push_back(0.3f);
-	cr.push_back(0.5f);
-	cr.push_back(0.7f);
-	cr.push_back(0.9f);
+//	cr.push_back(0.3f);
+//	cr.push_back(0.5f);
+//	cr.push_back(0.7f);
+//	cr.push_back(0.9f);
 
 	movementSteps = 300;
-
-	epochs = 10;
 }
 
 ResearchEngine::~ResearchEngine() {
-	delete start;
-	delete end;
+
 }
 
 void ResearchEngine::doPlannedResearches(bool showResults){
 	SDL_Thread *progressThread = SDL_CreateThread( _progressThread, (void*)this);
-	SDL_CreateThread( _researchThread, (void*)this);
+	SDL_Thread *researchThread = SDL_CreateThread( _researchThread, (void*)this);
 
 	//SDL_WaitThread(researchThread, NULL);
 	SDL_WaitThread(progressThread, NULL);
@@ -101,31 +116,44 @@ int _progressThread( void *data )
 void ResearchEngine::_doPlannedResearches(bool showResults){
 	vector<float>::iterator F;
 	vector<float>::iterator CR;
+	vector<Route*>::iterator route;
+	vector<int>::iterator startPopulationSize;
+	vector<int>::iterator type;
+	vector<int>::iterator epochs;
 
 	running = true;
 	currentResearch = 0;
-	researches = f.size() * cr.size() * 2;
-	for(type = 1; type <= 2; type++){
-		for(F = f.begin(); F != f.end(); ++F){
-			for(CR = cr.begin(); CR != cr.end(); ++CR){
-				doSingleResearch(
-					start,
-					end,
-					type,
-					startPopulationSize,
-					*F, *CR,
-					movementSteps,
-					false
-				);
-				currentResearch++;
+	researchesTotal = startPopulationSizes.size() * routes.size() * f.size() * cr.size() * types.size() * epochsVector.size();
+
+	for(startPopulationSize = startPopulationSizes.begin(); startPopulationSize != startPopulationSizes.end(); ++startPopulationSize){
+		for(epochs = epochsVector.begin(); epochs != epochsVector.end(); ++epochs){
+			epochsTotal = *epochs;
+			for(type = types.begin(); type != types.end(); ++type){
+				for(route = routes.begin(); route != routes.end(); ++route){
+					for(F = f.begin(); F != f.end(); ++F){
+						for(CR = cr.begin(); CR != cr.end(); ++CR){
+							doSingleResearch(
+								(*route)->start,
+								(*route)->end,
+								*type,
+								*startPopulationSize,
+								*F, *CR,
+								movementSteps,
+								epochsTotal,
+								showResults
+							);
+							currentResearch++;
+						}
+					}
+				}
 			}
 		}
 	}
 	running = false;
 }
 
-void ResearchEngine::doSingleResearch(Point *start, Point *end, int type, int populationSize, float f, float cr, int movementSteps, bool showResult){
-	Environment env(*start, *end, type, startPopulationSize, f, cr, movementSteps);
+void ResearchEngine::doSingleResearch(Point *start, Point *end, int type, int populationSize, float f, float cr, int movementSteps, int epochs, bool showResult){
+	Environment env(*start, *end, type, populationSize, f, cr, movementSteps);
 
 	vector<float> results;
 	for(currentEpoch = 0; currentEpoch < epochs; currentEpoch++){
@@ -133,8 +161,8 @@ void ResearchEngine::doSingleResearch(Point *start, Point *end, int type, int po
 	}
 
 	Worm * worm = env.getBestWorm();
-	worm->saveToFile(createFileName("", "_worm.txt", f, cr));
-	saveResultsToFile(createFileName("", "_results.txt", f, cr), results);
+	worm->saveToFile(createFileName("", "_worm.txt", start, end, type, populationSize, f, cr, movementSteps, epochs));
+	saveResultsToFile(createFileName("", "_results.txt", start, end, type, populationSize, f, cr, movementSteps, epochs), results);
 
 	if(showResult){
 		SDLInterface inteface;
@@ -158,7 +186,7 @@ void ResearchEngine::saveResultsToFile(string name, vector<float> results){
 	file.close();
 }
 
-string ResearchEngine::createFileName(string prefix, string postfix, float f, float cr){
+string ResearchEngine::createFileName(string prefix, string postfix, Point *start, Point *end, int type, int populationSize, float f, float cr, int movementSteps, int epochs){
 	string results = "";
 	results += prefix;
 
@@ -168,7 +196,7 @@ string ResearchEngine::createFileName(string prefix, string postfix, float f, fl
 	ss << end->x   << "_" << end->y   << "_";
 	ss << f << "_";
 	ss << cr << "_";
-	ss << startPopulationSize << "_";
+	ss << populationSize << "_";
 	ss << movementSteps << "_";
 	ss << epochs << "_";
 
@@ -186,7 +214,7 @@ int ResearchEngine::getCurrentEpoch(){
 }
 
 int ResearchEngine::getEpochs(){
-	return epochs;
+	return epochsTotal;
 }
 
 int ResearchEngine::getCurrentResearch(){
@@ -194,5 +222,5 @@ int ResearchEngine::getCurrentResearch(){
 }
 
 int ResearchEngine::getResearches(){
-	return researches;
+	return researchesTotal;
 }
