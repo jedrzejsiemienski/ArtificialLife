@@ -8,7 +8,7 @@
 #include "ResearchEngine.h"
 
 ResearchEngine::ResearchEngine() {
-	epochsVector.push_back(10);
+	epochsVector.push_back(50);
 
 	types.push_back(1);
 	types.push_back(2);
@@ -18,7 +18,7 @@ ResearchEngine::ResearchEngine() {
 	route->start = new Point(100, 100);
 	route->end = new Point(900, 600);
 	routes.push_back(route);
-
+/*
 	route = new Route();
 	route->start = new Point(900, 600);
 	route->end = new Point(100, 100);
@@ -28,8 +28,8 @@ ResearchEngine::ResearchEngine() {
 	route->start = new Point(100, 600);
 	route->end = new Point(900, 600);
 	routes.push_back(route);
-
-	startPopulationSizes.push_back(20);
+*/
+	startPopulationSizes.push_back(200);
 
 	f.push_back(0.4f);
 //	f.push_back(0.5f);
@@ -61,7 +61,7 @@ void ResearchEngine::doPlannedResearches(bool showResults){
 
 int _researchThread(void *data){
 	ResearchEngine* researchEngine = (ResearchEngine*) data;
-	researchEngine->_doPlannedResearches(false);
+	researchEngine->_doPlannedResearches(true);
 	return 0;
 }
 
